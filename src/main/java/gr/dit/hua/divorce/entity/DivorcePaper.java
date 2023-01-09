@@ -2,6 +2,8 @@ package gr.dit.hua.divorce.entity;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name="divorce_paper")
 public class DivorcePaper {
@@ -9,40 +11,35 @@ public class DivorcePaper {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="id")
-    private String id;
+    private Integer id;
 
-    @OneToOne(fetch=FetchType.LAZY,
-            cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name="member_info_id")
+    @JoinColumn(name="id")
     private MemberInfo lawyer1;
 
-    @OneToOne(fetch=FetchType.LAZY,
-            cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name="member_info_id")
+    @JoinColumn(name="id")
     private MemberInfo lawyer2;
 
-    @OneToOne(fetch=FetchType.LAZY,
-            cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name="member_info_id")
+    @JoinColumn(name="id")
     private MemberInfo spouse1;
 
-    @OneToOne(fetch=FetchType.LAZY,
-            cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name="member_info_id")
+    @JoinColumn(name="id")
     private MemberInfo spouse2;
 
-    @OneToOne(fetch=FetchType.LAZY,
-            cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name="member_info_id")
+    @JoinColumn(name="id")
     private MemberInfo notary;
 
-    @Column(name="date")
-    private String date;
+    @Column(name="created_at")
+    private Date date;
 
     @Column(name="number_of_children")
     private Integer numberOfChildren;
@@ -53,5 +50,84 @@ public class DivorcePaper {
     @Column(name="restore_name")
     private Integer restoreName;
 
-    //TODO: add assets and debts
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public MemberInfo getLawyer1() {
+        return lawyer1;
+    }
+
+    public void setLawyer1(MemberInfo lawyer1) {
+        this.lawyer1 = lawyer1;
+    }
+
+    public MemberInfo getLawyer2() {
+        return lawyer2;
+    }
+
+    public void setLawyer2(MemberInfo lawyer2) {
+        this.lawyer2 = lawyer2;
+    }
+
+    public MemberInfo getSpouse1() {
+        return spouse1;
+    }
+
+    public void setSpouse1(MemberInfo spouse1) {
+        this.spouse1 = spouse1;
+    }
+
+    public MemberInfo getSpouse2() {
+        return spouse2;
+    }
+
+    public void setSpouse2(MemberInfo spouse2) {
+        this.spouse2 = spouse2;
+    }
+
+    public MemberInfo getNotary() {
+        return notary;
+    }
+
+    public void setNotary(MemberInfo notary) {
+        this.notary = notary;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Integer getNumberOfChildren() {
+        return numberOfChildren;
+    }
+
+    public void setNumberOfChildren(Integer numberOfChildren) {
+        this.numberOfChildren = numberOfChildren;
+    }
+
+    public Integer getChildSupport() {
+        return childSupport;
+    }
+
+    public void setChildSupport(Integer childSupport) {
+        this.childSupport = childSupport;
+    }
+
+    public Integer getRestoreName() {
+        return restoreName;
+    }
+
+    public void setRestoreName(Integer restoreName) {
+        this.restoreName = restoreName;
+    }
 }

@@ -20,4 +20,36 @@ public class MemberInfo {
 
     @Column(name="accepted")
     private Integer accepted;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getAfm() {
+        return afm;
+    }
+
+    public void setAfm(String afm) {
+        this.afm = afm;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public Integer getAccepted() {
+        return accepted;
+    }
+
+    public void setAccepted(Integer accepted) {
+        this.accepted = accepted;
+    }
 }
