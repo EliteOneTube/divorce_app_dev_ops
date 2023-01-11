@@ -15,27 +15,27 @@ public class DivorcePaper {
 
     @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name="id")
+    @JoinColumn(name="tax_number", insertable = false, updatable = false)
     private MemberInfo lawyer1;
 
     @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name="id")
+    @JoinColumn(name="tax_number", insertable = false, updatable = false)
     private MemberInfo lawyer2;
 
     @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name="id")
+    @JoinColumn(name="tax_number", insertable = false, updatable = false)
     private MemberInfo spouse1;
 
     @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name="id")
+    @JoinColumn(name="tax_number", insertable = false, updatable = false)
     private MemberInfo spouse2;
 
     @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinColumn(name="id")
+    @JoinColumn(name="tax_number", insertable = false, updatable = false)
     private MemberInfo notary;
 
     @Column(name="created_at")

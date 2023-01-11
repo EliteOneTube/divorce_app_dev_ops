@@ -1,55 +1,92 @@
 package gr.dit.hua.divorce.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="member_info")
 public class MemberInfo {
     @Id
-    @Column(name="id")
-    private String id;
+    @Column(name="username")
+    private String username;
 
-    @Column(name="afm")
-    private String afm;
+    @Column(name="password")
+    private String password;
 
-    @Column(name="surname")
-    private String surname;
+    @Column(name="enabled")
+    private boolean enabled;
 
-    @Column(name="accepted")
-    private Integer accepted;
 
-    public String getId() {
-        return id;
+    @Column(name="taxNumber")
+    private String taxNumber;
+
+    @Column(name="fullName")
+    private String fullName;
+
+    @Column(name="email")
+    @NotBlank(message = "Email is mandatory")
+    @Email(message = "Email should be valid")
+    private String email;
+
+
+    public MemberInfo() {
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public MemberInfo(String username, String password, Boolean enabled, String tax_number, String fullName, String email) {
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
+        this.taxNumber = tax_number;
+        this.fullName = fullName;
+        this.email = email;
     }
 
-    public String getAfm() {
-        return afm;
+    public String getUsername() {
+        return username;
     }
 
-    public void setAfm(String afm) {
-        this.afm = afm;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public Integer getAccepted() {
-        return accepted;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setAccepted(Integer accepted) {
-        this.accepted = accepted;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public String getTaxNumber() {
+        return taxNumber;
+    }
+
+    public void setTaxNumber(String taxNumber) {
+        this.taxNumber = taxNumber;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
