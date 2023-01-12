@@ -1,15 +1,14 @@
 package gr.dit.hua.divorce.controller;
 
 import gr.dit.hua.divorce.dao.MemberInfoDao;
-import gr.dit.hua.divorce.dao.MemberInfoDaoImpl;
 import gr.dit.hua.divorce.entity.MemberInfo;
+import gr.dit.hua.divorce.entity.Users;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.web.bind.annotation.*;
@@ -18,12 +17,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class UserController {
-    @Autowired
-    UserDetailsService userDetailsService;
 
     @Autowired
     JdbcUserDetailsManager jdbcUserDetailsManager;
@@ -32,49 +28,39 @@ public class UserController {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    private MemberInfoDaoImpl memberInfoDaoImpl;
+    private MemberInfoDao memberInfoDao;
 
     @PostMapping("/register")
     @ResponseBody
-    public String processRegister(@Valid @RequestBody Map<String, String> json) {
-        MemberInfo memberInfo = new MemberInfo();
-        memberInfo.setFullName(json.get("fullName"));
-        memberInfo.setTaxNumber(json.get("taxNumber"));
-        memberInfo.setEmail(json.get("email"));
-        memberInfo.setUsername(json.get("username"));
-        memberInfo.setPassword(passwordEncoder.encode(json.get("password")));
-        memberInfo.setEnabled(true);
-
-        String role = json.get("role");
-
+    public String processRegister(@Valid @RequestBody MemberInfo userRegistrationObject) {
         // authorities to be granted
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(role.toUpperCase()));
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority(userRegistrationObject.getRole().toUpperCase()));
 
-        //check if user exists and if it does return to registration page with error message
-        try {
-            jdbcUserDetailsManager.loadUserByUsername(memberInfo.getUsername());
-        } catch (Exception e) {
-            memberInfoDaoImpl.save(memberInfo);
-            jdbcUserDetailsManager.addUserToGroup(memberInfo.getUsername(), role);
-            return "User created successfully";
+        if(jdbcUserDetailsManager.userExists(userRegistrationObject.getUsername())) {
+            throw new ResponseStatusException(
+                    HttpStatus.CONFLICT, "Username already exists");
         }
 
-        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User already exists");
+        User user = new User(userRegistrationObject.getUsername(), passwordEncoder.encode(userRegistrationObject.getPassword()), authorities);
+        jdbcUserDetailsManager.createUser(user);
+
+        userRegistrationObject.setPassword(null);
+        memberInfoDao.save(userRegistrationObject);
+
+        return "Registered successfully";
     }
 
     @PostMapping("/login")
     @ResponseBody
-    public String processLogin(@Valid @RequestBody MemberInfo memberInfo) {
-        System.out.println(jdbcUserDetailsManager.loadUserByUsername(memberInfo.getUsername()));
-        if (jdbcUserDetailsManager.loadUserByUsername(memberInfo.getUsername()) != null) {
-//            if (passwordEncoder.matches(memberInfo.getPassword(), jdbcUserDetailsManager.loadUserByUsername(memberInfo.getUsername()).getPassword())) {
-//                return "Authorized";
-//            }
-            return "Authorized";
+    public boolean login(@Valid @RequestBody Users userLoginObject) {
+        System.out.println(jdbcUserDetailsManager.loadUserByUsername(userLoginObject.getUsername()));
+        if (jdbcUserDetailsManager.loadUserByUsername(userLoginObject.getUsername()) != null) {
+            if (passwordEncoder.matches(userLoginObject.getPassword(), jdbcUserDetailsManager.loadUserByUsername(userLoginObject.getUsername()).getPassword())) {
+                return true;
+            }
         }
 
-        //if user does not exist or password is incorrect then return 401 error
-        throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Username or password is incorrect");
+        return false;
     }
 }

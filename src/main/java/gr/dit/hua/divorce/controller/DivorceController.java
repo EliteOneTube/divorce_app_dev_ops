@@ -2,11 +2,9 @@ package gr.dit.hua.divorce.controller;
 
 import gr.dit.hua.divorce.dao.DivorceDao;
 import gr.dit.hua.divorce.entity.DivorcePaper;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/divorce")
@@ -17,7 +15,7 @@ public class DivorceController {
     private DivorceDao divorceDao;
 
     @PostMapping("/deleteDivorce")
-    public void deleteDivorce(Integer id) {
+    public void deleteDivorce(@Valid @RequestBody Integer id) {
         divorceDao.deleteById(id);
     }
 
@@ -32,7 +30,7 @@ public class DivorceController {
     }
 
     @PostMapping("/saveDivorce")
-    public void saveDivorce(DivorcePaper divorce) {
+    public void saveDivorce(@Valid @RequestBody DivorcePaper divorce) {
         divorceDao.save(divorce);
     }
 }

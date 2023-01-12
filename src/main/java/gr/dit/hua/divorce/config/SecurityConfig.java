@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +19,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig {
+public class SecurityConfig  {
 
     @Autowired
     DataSource dataSource;
@@ -32,20 +33,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
+                .cors().and().csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/register").permitAll()
                 .requestMatchers("/login").permitAll()
-                .requestMatchers("/teacherlist").permitAll()
-                .requestMatchers("/teacherform").hasRole("ADMIN")
-                .requestMatchers("/students").hasRole("USER")
-                .requestMatchers("/teachers").hasRole("USER")
+                .requestMatchers("/member").hasRole("ADMIN")
+                .requestMatchers("/divorce/deleteDivorce").hasRole("LAWYER")
+                .requestMatchers("/divorce/getDivorces").hasRole("ADMIN")
+                .requestMatchers("/divorce/saveDivorce").hasRole("LAWYER")
                 .anyRequest().authenticated()
-                .and().formLogin().defaultSuccessUrl("/", true)
-                .permitAll()
-                .and()
-                .logout().permitAll();
+                .and().httpBasic();
+
 
 
         http.headers().frameOptions().sameOrigin();

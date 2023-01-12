@@ -17,7 +17,7 @@ public class Authorities {
     @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name="username")
-    private MemberInfo memberInfo;
+    private Users user;
 
     public Authorities() {
     }
