@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,7 +19,16 @@ public class MemberInfoDaoImpl implements MemberInfoDao {
     @Override
     @Transactional
     public MemberInfo findByTaxNumber(String taxNumber) {
-        return entityManager.find(MemberInfo.class, taxNumber);
+//        return entityManager.find(MemberInfo.class, taxNumber);
+        Session session = entityManager.unwrap(Session.class);
+        Query query = session.createQuery("from MemberInfo where taxNumber=:taxNumber");
+        query.setParameter("taxNumber", taxNumber);
+        List<MemberInfo> memberInfos = query.getResultList();
+        if (memberInfos.size() > 0) {
+            return memberInfos.get(0);
+        } else {
+            return null;
+        }
     }
 
     @Override

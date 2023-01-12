@@ -3,6 +3,8 @@ package gr.dit.hua.divorce.controller;
 import gr.dit.hua.divorce.dao.MemberInfoDao;
 import gr.dit.hua.divorce.entity.MemberInfo;
 import gr.dit.hua.divorce.entity.Users;
+import gr.dit.hua.divorce.templates.UserDetails;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,28 +33,40 @@ public class UserController {
     private MemberInfoDao memberInfoDao;
 
     @PostMapping("/register")
-    @ResponseBody
-    public String processRegister(@Valid @RequestBody MemberInfo userRegistrationObject) {
+    public String processRegister(@Valid @RequestBody UserDetails userRegistrationObject, HttpServletResponse response) {
+        if(userRegistrationObject.getRole().toUpperCase().equals("ADMIN")){
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return "Admins cannot be registered";
+        }
+
         // authorities to be granted
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        authorities.add(new SimpleGrantedAuthority(userRegistrationObject.getRole().toUpperCase()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + userRegistrationObject.getRole().toUpperCase()));
 
         if(jdbcUserDetailsManager.userExists(userRegistrationObject.getUsername())) {
-            throw new ResponseStatusException(
-                    HttpStatus.CONFLICT, "Username already exists");
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
+            return "Username already exists";
+        }
+
+        //check if tax number exists
+        if(memberInfoDao.findByTaxNumber(userRegistrationObject.getTaxNumber()) != null) {
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
+            return "Tax number already exists";
         }
 
         User user = new User(userRegistrationObject.getUsername(), passwordEncoder.encode(userRegistrationObject.getPassword()), authorities);
         jdbcUserDetailsManager.createUser(user);
 
-        userRegistrationObject.setPassword(null);
-        memberInfoDao.save(userRegistrationObject);
+        MemberInfo memberInfo = new MemberInfo();
+        memberInfo.setTaxNumber(userRegistrationObject.getTaxNumber());
+        memberInfo.setEmail(userRegistrationObject.getEmail());
+        memberInfo.setFullName(userRegistrationObject.getFullName());
+        memberInfoDao.save(memberInfo);
 
         return "Registered successfully";
     }
 
     @PostMapping("/login")
-    @ResponseBody
     public boolean login(@Valid @RequestBody Users userLoginObject) {
         System.out.println(jdbcUserDetailsManager.loadUserByUsername(userLoginObject.getUsername()));
         if (jdbcUserDetailsManager.loadUserByUsername(userLoginObject.getUsername()) != null) {

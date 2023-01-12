@@ -25,10 +25,12 @@ public class DivorceDaoImpl implements DivorceDao {
         return divorcePapers;
     }
 
+    //TODO: check if divorce paper exists already with all 4 members
     @Override
     @Transactional
     public void save(DivorcePaper divorce) {
-        DivorcePaper divorcePaper = entityManager.merge(divorce);
+        divorce.setCreated_at(new java.util.Date());
+        entityManager.merge(divorce);
     }
 
     @Override
@@ -37,12 +39,53 @@ public class DivorceDaoImpl implements DivorceDao {
         return entityManager.find(DivorcePaper.class, id);
     }
 
+    //TODO: check if it exists
     @Override
+    @Transactional
     public void deleteById(Integer id) {
         Session session = entityManager.unwrap(Session.class);
         Query query = session.createQuery("delete from DivorcePaper where id=:id");
         query.setParameter("id", id);
         query.executeUpdate();
+    }
+
+    @Override
+    @Transactional
+    public List<DivorcePaper> findByTaxNumber(String taxNumber) {
+        Session session = entityManager.unwrap(Session.class);
+        Query query = session.createQuery("from DivorcePaper where lawyer1=:taxNumber");
+        query.setParameter("taxNumber", taxNumber);
+        List<DivorcePaper> divorcePapers = query.getResultList();
+
+        //if the lawyer is not the first lawyer, check if he is the second lawyer
+        if (divorcePapers.isEmpty()) {
+            query = session.createQuery("from DivorcePaper where lawyer2=:taxNumber");
+            query.setParameter("taxNumber", taxNumber);
+            divorcePapers = query.getResultList();
+        }
+
+        //if the lawyer is not the second lawyer, check if he is the first spouse
+        if (divorcePapers.isEmpty()) {
+            query = session.createQuery("from DivorcePaper where spouse1=:taxNumber");
+            query.setParameter("taxNumber", taxNumber);
+            divorcePapers = query.getResultList();
+        }
+
+        //if the lawyer is not the first spouse, check if he is the second spouse
+        if (divorcePapers.isEmpty()) {
+            query = session.createQuery("from DivorcePaper where spouse2=:taxNumber");
+            query.setParameter("taxNumber", taxNumber);
+            divorcePapers = query.getResultList();
+        }
+
+        //last check, if the lawyer is not the second spouse, check if he is the notary
+        if (divorcePapers.isEmpty()) {
+            query = session.createQuery("from DivorcePaper where notary=:taxNumber");
+            query.setParameter("taxNumber", taxNumber);
+            divorcePapers = query.getResultList();
+        }
+
+        return divorcePapers;
     }
 
 

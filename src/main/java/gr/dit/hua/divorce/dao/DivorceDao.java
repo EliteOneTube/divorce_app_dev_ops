@@ -8,6 +8,7 @@ public interface DivorceDao {
     public List<DivorcePaper> findAll();
     public void save(DivorcePaper divorce);
     public DivorcePaper findById(Integer id);
-
     public void deleteById(Integer id);
+
+    public List<DivorcePaper> findByTaxNumber(String taxNumber);
 }
