@@ -14,8 +14,13 @@ public class DivorcePaper {
     @Column(name="id")
     private Integer id;
 
-    @OneToMany(fetch= FetchType.EAGER, cascade=CascadeType.ALL, orphanRemoval=true)
-    @JoinColumn(name="member_info_taxNumber")
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
+            name = "divorce_paper_member_info",
+            joinColumns = @JoinColumn(name = "divorce_paper_id"),
+            inverseJoinColumns = @JoinColumn(name = "member_info_taxNumber")
+    )
     private List<MemberInfo> members;
 
     @Column(name="created_at")
@@ -30,6 +35,12 @@ public class DivorcePaper {
     @Column(name="restoreName")
     private boolean restoreName;
 
+    @Column(name="notarialActionId")
+    private String notarialActionId;
+
+    @Column(name="status")
+    private String status;
+
     public DivorcePaper() {
     }
 
@@ -37,6 +48,7 @@ public class DivorcePaper {
         this.numberOfChildren = numberOfChildren;
         this.childSupport = childSupport;
         this.restoreName = restoreName;
+        this.status = "pending";
     }
 
     public Integer getId() {
@@ -86,5 +98,21 @@ public class DivorcePaper {
 
     public void setMembers(List<MemberInfo> members) {
         this.members = members;
+    }
+
+    public String getNotarialActionId() {
+        return notarialActionId;
+    }
+
+    public void setNotarialActionId(String notarialActionId) {
+        this.notarialActionId = notarialActionId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

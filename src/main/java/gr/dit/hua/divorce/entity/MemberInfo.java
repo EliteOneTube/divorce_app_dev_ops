@@ -1,8 +1,11 @@
 package gr.dit.hua.divorce.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+
+import java.util.List;
 
 @Entity
 @Table(name="member_info")
@@ -18,6 +21,16 @@ public class MemberInfo {
     @NotBlank(message = "Email is mandatory")
     @Email(message = "Email should be valid")
     private String email;
+
+    @ManyToMany(fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+                    CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
+            name="divorce_paper_member_info",
+            joinColumns=@JoinColumn(name="member_info_taxNumber"),
+            inverseJoinColumns=@JoinColumn(name="divorce_paper_id")
+            )
+    @JsonBackReference
+    private List<DivorcePaper> divorcePapers;
 
     public MemberInfo() {
     }
@@ -50,5 +63,13 @@ public class MemberInfo {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<DivorcePaper> getDivorcePapers() {
+        return divorcePapers;
+    }
+
+    public void setDivorcePapers(List<DivorcePaper> divorcePapers) {
+        this.divorcePapers = divorcePapers;
     }
 }

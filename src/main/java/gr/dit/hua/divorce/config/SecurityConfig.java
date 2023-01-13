@@ -39,10 +39,11 @@ public class SecurityConfig  {
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/register").permitAll()
                 .requestMatchers("/login").permitAll()
-                .requestMatchers("/member").hasRole("ADMIN")
+                .requestMatchers("/member/**").hasRole("ADMIN")
                 .requestMatchers("/divorce/deleteDivorce").hasRole("LAWYER")
                 .requestMatchers("/divorce/getDivorces").hasRole("ADMIN")
                 .requestMatchers("/divorce/saveDivorce").hasRole("LAWYER")
+                .requestMatchers("/divorce/approveDivorce").hasRole("NOTARY")
                 .anyRequest().authenticated()
                 .and().httpBasic();
 

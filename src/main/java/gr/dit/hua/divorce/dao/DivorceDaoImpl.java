@@ -1,13 +1,17 @@
 package gr.dit.hua.divorce.dao;
 
 import gr.dit.hua.divorce.entity.DivorcePaper;
+import gr.dit.hua.divorce.entity.MemberInfo;
+import gr.dit.hua.divorce.templates.DivorceInfo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.lang.reflect.Member;
 import java.util.List;
 
 @Repository
@@ -15,6 +19,9 @@ public class DivorceDaoImpl implements DivorceDao {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    private MemberInfoDaoImpl memberInfoDao;
 
     @Override
     @Transactional
@@ -25,7 +32,6 @@ public class DivorceDaoImpl implements DivorceDao {
         return divorcePapers;
     }
 
-    //TODO: check if divorce paper exists already with all 4 members
     @Override
     @Transactional
     public void save(DivorcePaper divorce) {
@@ -39,7 +45,6 @@ public class DivorceDaoImpl implements DivorceDao {
         return entityManager.find(DivorcePaper.class, id);
     }
 
-    //TODO: check if it exists
     @Override
     @Transactional
     public void deleteById(Integer id) {
@@ -52,42 +57,22 @@ public class DivorceDaoImpl implements DivorceDao {
     @Override
     @Transactional
     public List<DivorcePaper> findByTaxNumber(String taxNumber) {
-        Session session = entityManager.unwrap(Session.class);
-        Query query = session.createQuery("from DivorcePaper where lawyer1=:taxNumber");
-        query.setParameter("taxNumber", taxNumber);
-        List<DivorcePaper> divorcePapers = query.getResultList();
+        MemberInfo memberInfo = memberInfoDao.findByTaxNumber(taxNumber);
 
-        //if the lawyer is not the first lawyer, check if he is the second lawyer
-        if (divorcePapers.isEmpty()) {
-            query = session.createQuery("from DivorcePaper where lawyer2=:taxNumber");
-            query.setParameter("taxNumber", taxNumber);
-            divorcePapers = query.getResultList();
-        }
-
-        //if the lawyer is not the second lawyer, check if he is the first spouse
-        if (divorcePapers.isEmpty()) {
-            query = session.createQuery("from DivorcePaper where spouse1=:taxNumber");
-            query.setParameter("taxNumber", taxNumber);
-            divorcePapers = query.getResultList();
-        }
-
-        //if the lawyer is not the first spouse, check if he is the second spouse
-        if (divorcePapers.isEmpty()) {
-            query = session.createQuery("from DivorcePaper where spouse2=:taxNumber");
-            query.setParameter("taxNumber", taxNumber);
-            divorcePapers = query.getResultList();
-        }
-
-        //last check, if the lawyer is not the second spouse, check if he is the notary
-        if (divorcePapers.isEmpty()) {
-            query = session.createQuery("from DivorcePaper where notary=:taxNumber");
-            query.setParameter("taxNumber", taxNumber);
-            divorcePapers = query.getResultList();
-        }
-
-        return divorcePapers;
+        return memberInfo.getDivorcePapers();
     }
 
+    @Override
+    public List<DivorcePaper> findByMembers(DivorceInfo divorceInfo) {
+        MemberInfo spouse1 = memberInfoDao.findByTaxNumber(divorceInfo.getSpouse1());
+        MemberInfo spouse2 = memberInfoDao.findByTaxNumber(divorceInfo.getSpouse2());
+
+        if(spouse1.getDivorcePapers().size() > 0 && spouse2.getDivorcePapers().size() > 0) {
+            return spouse1.getDivorcePapers();
+        } else {
+            return null;
+        }
+    }
 
 }
 

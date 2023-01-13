@@ -1,6 +1,7 @@
 package gr.dit.hua.divorce.controller;
 
 import gr.dit.hua.divorce.dao.MemberInfoDao;
+import gr.dit.hua.divorce.entity.Acceptance;
 import gr.dit.hua.divorce.entity.MemberInfo;
 import gr.dit.hua.divorce.entity.Users;
 import gr.dit.hua.divorce.templates.UserDetails;
@@ -61,6 +62,7 @@ public class UserController {
         memberInfo.setTaxNumber(userRegistrationObject.getTaxNumber());
         memberInfo.setEmail(userRegistrationObject.getEmail());
         memberInfo.setFullName(userRegistrationObject.getFullName());
+
         memberInfoDao.save(memberInfo);
 
         return "Registered successfully";
@@ -68,7 +70,6 @@ public class UserController {
 
     @PostMapping("/login")
     public boolean login(@Valid @RequestBody Users userLoginObject) {
-        System.out.println(jdbcUserDetailsManager.loadUserByUsername(userLoginObject.getUsername()));
         if (jdbcUserDetailsManager.loadUserByUsername(userLoginObject.getUsername()) != null) {
             if (passwordEncoder.matches(userLoginObject.getPassword(), jdbcUserDetailsManager.loadUserByUsername(userLoginObject.getUsername()).getPassword())) {
                 return true;

@@ -2,6 +2,7 @@ package gr.dit.hua.divorce.controller;
 
 import gr.dit.hua.divorce.dao.MemberInfoDao;
 import gr.dit.hua.divorce.entity.MemberInfo;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,15 +25,14 @@ public class MemberController {
     }
 
     @GetMapping("/getMember")
-    MemberInfo getMember(String taxNumber) {
+    MemberInfo getMember(String taxNumber, HttpServletResponse response) {
         if(memberInfoDao.findByTaxNumber(taxNumber) != null) {
             return memberInfoDao.findByTaxNumber(taxNumber);
         }
 
         //send back 404
-        throw new ResponseStatusException(
-                HttpStatus.NOT_FOUND, "Member not found"
-        );
+        response.setStatus(404);
+        return null;
     }
 
 }
