@@ -14,4 +14,7 @@ public interface MemberInfoDao {
     public void deleteAll();
 
     public List<MemberInfo> findAll();
+
+    public MemberInfo findByUsername(String username);
+
 }

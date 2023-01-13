@@ -11,9 +11,6 @@ public class Acceptance {
     @Column(name="id")
     private Integer id;
 
-    @Column(name="acceptance")
-    private boolean acceptance;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id")
     private DivorcePaper divorcePaper;
@@ -25,24 +22,12 @@ public class Acceptance {
     public Acceptance() {
     }
 
-    public Acceptance(boolean acceptance) {
-        this.acceptance = acceptance;
-    }
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public boolean isAcceptance() {
-        return acceptance;
-    }
-
-    public void setAcceptance(boolean acceptance) {
-        this.acceptance = acceptance;
     }
 
     public DivorcePaper getDivorcePaper() {

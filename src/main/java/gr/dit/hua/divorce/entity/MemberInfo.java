@@ -22,6 +22,10 @@ public class MemberInfo {
     @Email(message = "Email should be valid")
     private String email;
 
+    @Column(name="username")
+    private String username;
+
+
     @ManyToMany(fetch=FetchType.LAZY, cascade= {CascadeType.PERSIST, CascadeType.MERGE,
                     CascadeType.DETACH, CascadeType.REFRESH})
     @JoinTable(
@@ -71,5 +75,13 @@ public class MemberInfo {
 
     public void setDivorcePapers(List<DivorcePaper> divorcePapers) {
         this.divorcePapers = divorcePapers;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

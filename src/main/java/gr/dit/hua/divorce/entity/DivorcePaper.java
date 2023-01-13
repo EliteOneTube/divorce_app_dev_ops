@@ -1,6 +1,9 @@
 package gr.dit.hua.divorce.entity;
 
+import gr.dit.hua.divorce.templates.NotarialInfo;
 import jakarta.persistence.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 import java.util.List;
@@ -40,6 +43,12 @@ public class DivorcePaper {
 
     @Column(name="status")
     private String status;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "acceptance_id")
+    private List<Acceptance> acceptance;
+
 
     public DivorcePaper() {
     }
@@ -114,5 +123,13 @@ public class DivorcePaper {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public List<Acceptance> getAcceptance() {
+        return acceptance;
+    }
+
+    public void setAcceptance(List<Acceptance> acceptance) {
+        this.acceptance = acceptance;
     }
 }

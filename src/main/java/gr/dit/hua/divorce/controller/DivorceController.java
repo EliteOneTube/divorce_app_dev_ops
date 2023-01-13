@@ -7,6 +7,7 @@ import gr.dit.hua.divorce.entity.DivorcePaper;
 import gr.dit.hua.divorce.entity.MemberInfo;
 import gr.dit.hua.divorce.templates.DivorceInfo;
 import gr.dit.hua.divorce.templates.NotarialInfo;
+import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +23,36 @@ import java.util.Map;
 @RequestMapping("/divorce")
 public class DivorceController {
 
-
     @Autowired
     private DivorceDao divorceDao;
 
     @Autowired
     MemberInfoDao memberInfoDao;
 
-    //TODO: check if the lawyer is the one who is supposed to handle the case
     @PostMapping("/deleteDivorce/{id}")
-    public void deleteDivorce(@PathVariable Integer id, Principal principal) {
-        //principal.getName()
+    public void deleteDivorce(@PathVariable Integer id, Principal principal, HttpServletResponse response) {
+        DivorcePaper divorcePaper = divorceDao.findById(id);
+
+        //check if divorce paper exists
+        if(divorcePaper == null) {
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+
+        //check if the user is the lawyer
+        Boolean exists = false;
+        for(MemberInfo memberInfo : divorcePaper.getMembers()) {
+            if(memberInfo.getUsername().equals(principal.getName())) {
+                exists = true;
+                break;
+            }
+        }
+
+        if(!exists) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return;
+        }
+
         divorceDao.deleteById(id);
     }
 
@@ -46,9 +66,9 @@ public class DivorceController {
         return divorceDao.findAll();
     }
 
-    //TODO: check if users exist
+    //TODO: check roles
     @PostMapping("/saveDivorce")
-    public String saveDivorce(@Valid @RequestBody DivorceInfo divorceInfo, HttpServletResponse response) {
+    public String saveDivorce(@Valid @RequestBody DivorceInfo divorceInfo, HttpServletResponse response, Principal principal) {
         DivorcePaper divorce = new DivorcePaper();
         divorce.setChildSupport(divorceInfo.getChildSupport());
         divorce.setRestoreName(divorceInfo.getRestoreName());
@@ -62,6 +82,11 @@ public class DivorceController {
         members.add(memberInfoDao.findByTaxNumber(divorceInfo.getSpouse2()));
         members.add(memberInfoDao.findByTaxNumber(divorceInfo.getSpouse1()));
 
+        if (members.contains(null)) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return "One or more users do not exist";
+        }
+
         divorce.setMembers(members);
 
         List<DivorcePaper> existingDivorces = divorceDao.findByMembers(divorceInfo);
@@ -70,18 +95,19 @@ public class DivorceController {
             return "Divorce paper already exists";
         }
 
-        Acceptance acceptanceSpouse1 = new Acceptance();
-        acceptanceSpouse1.setAcceptance(false);
-        acceptanceSpouse1.setDivorcePaper(divorce);
-        acceptanceSpouse1.setMemberInfo(memberInfoDao.findByTaxNumber(divorceInfo.getSpouse1()));
+        MemberInfo lawyer = memberInfoDao.findByUsername(principal.getName());
 
-        Acceptance acceptanceSpouse2 = new Acceptance();
-        acceptanceSpouse2.setAcceptance(false);
-        acceptanceSpouse2.setDivorcePaper(divorce);
-        acceptanceSpouse2.setMemberInfo(memberInfoDao.findByTaxNumber(divorceInfo.getSpouse2()));
+        Acceptance acceptance = new Acceptance();
+        acceptance.setMemberInfo(lawyer);
+        acceptance.setDivorcePaper(divorce);
 
+        List<Acceptance> acceptances = new ArrayList<>();
 
+        acceptances.add(acceptance);
 
+        divorce.setAcceptance(acceptances);
+
+        divorce.setStatus("Pending");
 
         divorceDao.save(divorce);
 
@@ -93,7 +119,6 @@ public class DivorceController {
         return divorceDao.findByTaxNumber(taxNumber);
     }
 
-    //TODO: check if all users accepted
     @PostMapping("/approveDivorce")
     public String approveDivorce(@RequestBody NotarialInfo notarialInfo, HttpServletResponse response) {
         DivorcePaper divorce = divorceDao.findById(notarialInfo.getId());
@@ -103,14 +128,19 @@ public class DivorceController {
             return "Divorce paper does not exist";
         }
 
+        if(divorce.getAcceptance().size() != 4) {
+            response.setStatus(403);
+            return "Not all users have accepted the divorce";
+        }
+
         divorce.setStatus("approved");
         divorce.setNotarialActionId(notarialInfo.getNotarialActionId());
         divorceDao.save(divorce);
         return "Divorce approved successfully";
     }
 
-    @PostMapping("/acceptDivorce")
-    public String acceptDivorce(@PathVariable Integer id, HttpServletResponse response) {
+    @PostMapping("/acceptDivorce/{id}")
+    public String acceptDivorce(@PathVariable Integer id, HttpServletResponse response, Principal principal) {
         DivorcePaper divorce = divorceDao.findById(id);
 
         if(divorce == null) {
@@ -118,6 +148,36 @@ public class DivorceController {
             return "Divorce paper does not exist";
         }
 
+        MemberInfo memberInfo = memberInfoDao.findByUsername(principal.getName());
+
+        //check if user is included in divorce
+        Boolean exists = false;
+        for(MemberInfo member : divorce.getMembers()) {
+            if(member.getUsername().equals(principal.getName())) {
+                exists = true;
+                break;
+            }
+        }
+
+        if(!exists) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return "User is not included in divorce";
+        }
+
+        for(Acceptance acceptance : divorce.getAcceptance()) {
+            if(acceptance.getMemberInfo().getUsername().equals(principal.getName())) {
+                response.setStatus(409);
+                return "Divorce has been already accepted";
+            }
+        }
+
+        Acceptance acceptance = new Acceptance();
+        acceptance.setMemberInfo(memberInfoDao.findByUsername(principal.getName()));
+        acceptance.setDivorcePaper(divorce);
+
+        List<Acceptance> acceptances = divorce.getAcceptance();
+        acceptances.add(acceptance);
+        divorce.setAcceptance(acceptances);
 
         divorceDao.save(divorce);
         return "Divorce accepted successfully";

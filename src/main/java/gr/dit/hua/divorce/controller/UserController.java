@@ -1,22 +1,20 @@
 package gr.dit.hua.divorce.controller;
 
 import gr.dit.hua.divorce.dao.MemberInfoDao;
-import gr.dit.hua.divorce.entity.Acceptance;
 import gr.dit.hua.divorce.entity.MemberInfo;
 import gr.dit.hua.divorce.entity.Users;
 import gr.dit.hua.divorce.templates.UserDetails;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +60,9 @@ public class UserController {
         memberInfo.setTaxNumber(userRegistrationObject.getTaxNumber());
         memberInfo.setEmail(userRegistrationObject.getEmail());
         memberInfo.setFullName(userRegistrationObject.getFullName());
+
+
+        memberInfo.setUsername(userRegistrationObject.getUsername());
 
         memberInfoDao.save(memberInfo);
 

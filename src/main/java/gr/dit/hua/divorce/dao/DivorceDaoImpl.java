@@ -21,7 +21,7 @@ public class DivorceDaoImpl implements DivorceDao {
     private EntityManager entityManager;
 
     @Autowired
-    private MemberInfoDaoImpl memberInfoDao;
+    private MemberInfoDao memberInfoDao;
 
     @Override
     @Transactional

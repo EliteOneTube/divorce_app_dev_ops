@@ -47,4 +47,12 @@ public class MemberInfoDaoImpl implements MemberInfoDao {
         Session session = entityManager.unwrap(Session.class);
         return session.createQuery("from MemberInfo", MemberInfo.class).getResultList();
     }
+
+    @Override
+    public MemberInfo findByUsername(String username) {
+        Session session = entityManager.unwrap(Session.class);
+        Query<MemberInfo> query = session.createQuery("from MemberInfo where username=:username", MemberInfo.class);
+        query.setParameter("username", username);
+        return query.getSingleResult();
+    }
 }
