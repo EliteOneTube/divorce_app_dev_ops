@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+//TODO: dont let approved divorces to be edited
+
 @RestController
 @RequestMapping("/divorce")
 public class DivorceController {
@@ -113,7 +115,7 @@ public class DivorceController {
 
         return "Divorce saved successfully";
     }
-
+    //TODO: check if user is the same as the one we are searching
     @GetMapping("/getDivorceByTaxNumber")
     public List<DivorcePaper> getDivorceByTaxNumber(String taxNumber) {
         return divorceDao.findByTaxNumber(taxNumber);
