@@ -23,6 +23,11 @@ public class MemberController {
     List<MemberInfo> getMembers() {
         return memberInfoDao.findAll();
     }
+    /*
+    @GetMapping("/getMembers")
+    public String index() {return "layout";}
+    TODO with List must be a different way
+    */
 
     @GetMapping("/getMember")
     MemberInfo getMember(String taxNumber, HttpServletResponse response) {
