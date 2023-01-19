@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+<!--  <link rel="icon" href="https://getbootstrap.com/docs/4.0/assets/img/favicons/favicon.ico">-->
+
+  <title>Cover Template for Bootstrapghfgffg</title>
+
+  <!-- Bootstrap core CSS -->
+<link href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+<!--  &lt;!&ndash; Custom styles for this template &ndash;&gt;-->
+<link href="../static/css/cover.css" th:href="@{/css/cover.css}" rel="stylesheet">
+</head>
+
+<body class="text-center">
+
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+  <header class="masthead mb-auto" th:replace="layout/header :: header">
+    <div class="inner">
+      footer here will be replaced
+    </div>
+  </header>
+
+  <main role="main" class="inner cover" layout:fragment="main-content">
+    <h1>nkmnjknk</h1>
+  </main>
+
+  <footer class="mastfoot mt-auto" th:replace="layout/footer :: footer">
+    <div class="inner">
+      <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
