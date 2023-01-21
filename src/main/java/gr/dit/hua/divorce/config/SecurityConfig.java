@@ -34,7 +34,6 @@ public class SecurityConfig  {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .cors().and().csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeRequests()
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/register").permitAll()
@@ -44,8 +43,7 @@ public class SecurityConfig  {
                 .requestMatchers("/divorce/getDivorces").hasRole("ADMIN")
                 .requestMatchers("/divorce/saveDivorce").hasRole("LAWYER")
                 .requestMatchers("/divorce/approveDivorce").hasRole("NOTARY")
-                .anyRequest().authenticated()
-                .and().httpBasic();
+                .anyRequest().authenticated();
 
 
 
