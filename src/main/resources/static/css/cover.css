@@ -81,7 +81,7 @@ p2{
   front-family: arial;
   }
 h{
-   text align: center;
+   text-align: center;
    color:green;
    }
 a{
@@ -176,6 +176,6 @@ color: green;
  */
 .mastfoot {
     color: rgba(255, 255, 255, .5);
-    display: flex
+    display: flex;
     flex-direction: row;
 }

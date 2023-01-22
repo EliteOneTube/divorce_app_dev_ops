@@ -38,6 +38,7 @@ public class SecurityConfig  {
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/register").permitAll()
                 .requestMatchers("/login").permitAll()
+                .requestMatchers("/more_information").permitAll()
                 .requestMatchers("/member/**").hasRole("ADMIN")
                 .requestMatchers("/divorce/deleteDivorce").hasRole("LAWYER")
                 .requestMatchers("/divorce/getDivorces").hasRole("ADMIN")

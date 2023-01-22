@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:more_information="http://www.ultraq.net.nz/thymeleaf/more_information">
+      xmlns:more_information="http://www.ultraq.net.nz/thymeleaf/more_information" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 <head>
     <meta charset="UTF-8">
     <title>More information</title>
@@ -8,15 +8,7 @@
 <body>
 
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-    <header class="masthead mb-auto" th:replace="~{layout/header :: header}">
-        <div>
-            <h style="font-size:4vw">How to use our application</h>
-        </div>
-
-    </header>
-
-
-    <main role="main" class="inner cover" more_information:fragment="main-content">
+    <main role="main" class="inner cover" layout:fragment="main-content">
         <p>
             The application’s aim is to implement the issuance of a marriage
             dissolution certificate. All participants that are being involved in the
@@ -67,14 +59,6 @@
 
 
     </main>
-
-
-    <footer class="mastfoot mt-auto" th:replace="~{layout/footer :: footer}" style="flex-direction: row;">
-        <div class="inner">
-            If you still do not know what to do press
-            <a href="https://twitter.com/mdo">Help</a>
-        </div>
-    </footer>
 </div>
 </body>
 </html>

@@ -21,54 +21,47 @@
 <body class="text-center">
 
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-  <header class="masthead mb-auto" th:replace="~{layout/header :: header}">
-    <div class="Lucida_Handwriting">
-      <h style="font-size:4vw">Welcome to Divorce App</h>
-    </div>
-
+  <header class="masthead mb-auto" th:fragment="footer" th:replace="~{layout/header :: header}">
+    Will be replaced by the header fragment
   </header>
 
+    <main class="px-3" layout:fragment="main-content">
+      <h1> This main content will be decorated by the actual content returned by the controller methods </h1>
+    </main>
 
-  <main role="main" class="inner cover" layout:fragment="main-content">
-    <div class="inner">
-      <form name="Log in">
-      <table class="center" border="1" style="width:68%">
-        <tr style="height:100px">
-          <th>
-            <p2>Log in</p2>
-          </th>
-        </tr>
-        <tr>
-          <th style="height:200px">
-            <p2>User Name</p2>
-            <input type="text"
-                   name="login"/>
+<!--  <main role="main" class="inner cover" layout:fragment="main-content">-->
+<!--    <div class="inner">-->
+<!--      <form name="Log in">-->
+<!--      <table class="center" border="1" style="width:68%">-->
+<!--        <tr style="height:100px">-->
+<!--          <th>-->
+<!--            <p2>Log in</p2>-->
+<!--          </th>-->
+<!--        </tr>-->
+<!--        <tr>-->
+<!--          <th style="height:200px">-->
+<!--            <p2>User Name</p2>-->
+<!--            <input type="text"-->
+<!--                   name="login"/>-->
 
-            <p></p>
+<!--            <p></p>-->
 
-            <p2>Password</p2>
-            <input type="password"
-                   name="password"/>
-            <p></p>
-            <input type="submit"
-                   name="submit"/>
-          </th>
-        </tr>
-        </form>
-      </table>
-    </div>
-  </main>
+<!--            <p2>Password</p2>-->
+<!--            <input type="password"-->
+<!--                   name="password"/>-->
+<!--            <p></p>-->
+<!--            <input type="submit"-->
+<!--                   name="submit"/>-->
+<!--          </th>-->
+<!--        </tr>-->
+<!--        </form>-->
+<!--      </table>-->
+<!--    </div>-->
+<!--  </main>-->
 
 
   <footer class="mastfoot mt-auto" th:replace="~{layout/footer :: footer}" style="flex-direction: row;">
-    <div class="inner">
-      Are you looking for an easy and fight-free divorce?
-      Then you are in the right place
-      <p></p>
-      <a href="file:///C:/Users/Katerina/OneDrive/%CE%88%CE%B3%CE%B3%CF%81%CE%B1%CF%86%CE%B1/GitHub/divorce_app/src/main/resources/templates/layout/more_information.html" >
-        More information</a>
-      <a href="https://twitter.com/mdo">Help</a>
-    </div>
+
   </footer>
 </div>
 

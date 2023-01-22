@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
+@RequestMapping("")
 public class IndexController{
     @GetMapping("/notary")
     public String notary() { return "notary";}
@@ -18,5 +19,8 @@ public class IndexController{
 
     @GetMapping("/lawyer")
     public String lawyer() { return "lawyer";}
+
+    @GetMapping("/more_information")
+    public String more_information() { return "more_information";}
 
 }
