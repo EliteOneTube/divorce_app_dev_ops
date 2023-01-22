@@ -23,7 +23,28 @@ a:hover {
 /*
  * Base structure
  */
+table{
+  border: 1px gray;
+  border-collapse: collapse;
+}
 
+table.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+input[type=text] {
+  background-color: gray;
+  color: white;
+}
+input[type=password] {
+  background-color: gray;
+  color: white;
+}
+
+input[type=submit] {
+  background-color: gray;
+  color: white;
+}
 html,
 body {
     height: 100%;
@@ -43,6 +64,10 @@ body {
 }
 h{front-size: x-large}
 
+p2{front-size: large}
+
+p1{front-size: medium}
+
 p{front-family: "MV Boli"}
 p{
   text-align: center;
@@ -50,6 +75,11 @@ p{
   front-family: arial;
   }
 
+p2{
+  text-align: center;
+  color: gray;
+  front-family: arial;
+  }
 h{
    text align: center;
    color:green;
@@ -76,10 +106,6 @@ a{
 
 a:hover{
 color: green;
-}
-
-p:hover{
-color: red;
 }
 
 .Lucida_Handwriting {font-family:Lucida Handwriting;}

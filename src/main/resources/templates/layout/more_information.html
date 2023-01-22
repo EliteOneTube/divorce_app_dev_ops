@@ -1,10 +1,80 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:more_information="http://www.ultraq.net.nz/thymeleaf/more_information">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>More information</title>
 </head>
 <body>
 
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <header class="masthead mb-auto" th:replace="~{layout/header :: header}">
+        <div>
+            <h style="font-size:4vw">How to use our application</h>
+        </div>
+
+    </header>
+
+
+    <main role="main" class="inner cover" more_information:fragment="main-content">
+        <p>
+            The application’s aim is to implement the issuance of a marriage
+            dissolution certificate. All participants that are being involved in the
+            divorce must have been registered in our site.
+
+            If you are:
+        </p>
+
+
+        <ol>
+            <li><p2>Lawyer</p2>
+                <ul>
+                    <li>
+                        <p1>Commencement of divorce proceedings</p1>
+                        <p>Give the required information for the other lawyer, notary and the
+                            Spouses(with AFM/AMKA and last name) by pressing insert member’s names
+                            and then by pressing insert document’s details to add the divorce’s details.
+                        </p>
+
+
+                        <p1>Confirm your devorce</p1>
+                        <p>Press confirmation of devorce and then approval.</p>
+
+                        <p1>Cancel your devorce</p1>
+                        <p>Press cancellation of devorce and then confirmed</p>
+                    </li>
+                </ul>
+            </li>
+
+            <li><p2>Spouse</p2>
+                <ul>
+                    <li>
+                        <p1>Confirm your devorce</p1>
+                        <p>Press confirmation of devorce and then approval.</p>
+                    </li>
+                </ul>
+            </li>
+
+            <li><p2>Notary</p2>
+                <ul>
+                    <li>
+                        <p1>Fill in the account’s details</p1>
+                        <p>Press insert notarial instrument and fill in the required documents.</p>
+                    </li>
+                </ul>
+            </li>
+        </ol>
+
+
+    </main>
+
+
+    <footer class="mastfoot mt-auto" th:replace="~{layout/footer :: footer}" style="flex-direction: row;">
+        <div class="inner">
+            If you still do not know what to do press
+            <a href="https://twitter.com/mdo">Help</a>
+        </div>
+    </footer>
+</div>
 </body>
 </html>
