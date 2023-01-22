@@ -41,6 +41,49 @@ body {
     text-shadow: 0 .05rem .1rem rgba(0, 0, 0, .5);
     box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
 }
+h{front-size: x-large}
+
+p{front-family: "MV Boli"}
+p{
+  text-align: center;
+  color: gray;
+  front-family: arial;
+  }
+
+h{
+   text align: center;
+   color:green;
+   }
+a{
+   color:grey
+  }
+#Information {
+    border-radius: 20px;
+    border: 2px solid #73AD21;
+    padding: 10px;
+    width: 150px;
+    height: 100px;
+    }
+
+#Help {
+    border-radius: 20px;
+    border: 2px solid #73AD21;
+    padding: 10px;
+    width: 150px;
+    height: 100px;
+    }
+
+
+a:hover{
+color: green;
+}
+
+p:hover{
+color: red;
+}
+
+.Lucida_Handwriting {font-family:Lucida Handwriting;}
+
 
 .cover-container {
     max-width: 42em;
@@ -107,4 +150,6 @@ body {
  */
 .mastfoot {
     color: rgba(255, 255, 255, .5);
+    display: flex
+    flex-direction: row;
 }
