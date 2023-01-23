@@ -23,4 +23,9 @@ public class IndexController{
     @GetMapping("/more_information")
     public String more_information() { return "more_information";}
 
+    @GetMapping("/login")
+    public String login() { return "login";}
+
+    @GetMapping("/help")
+    public String help() { return "help";}
 }
