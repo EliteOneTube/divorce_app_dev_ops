@@ -9,6 +9,7 @@ a:hover {
     color: #fff;
 }
 
+
 /* Custom default button */
 .btn-secondary,
 .btn-secondary:hover,
@@ -88,13 +89,16 @@ p1{
   }
 
 p4{
+  display: inline-block;
+  width: 18%;
   text-align: left;
   color: white;
   front-family: arial;
   }
+/*
 p6{
   text-align: center;
-}
+}*/
 p5{
   text-align: left;
   color: gray;
@@ -129,10 +133,10 @@ a{
   }
 #Logo{
     border-radius: 18px;
-      background: green;
-      padding: 20px;
-      width: 15px;
-      height: 10px;
+    background: green;
+    padding: 20px;
+    width: 15px;
+    height: 10px;
     }
 
 
@@ -149,6 +153,8 @@ color: green;
 }
 
 
+
+
 /*
  * Header
  */
@@ -158,6 +164,15 @@ color: green;
 
 .masthead-brand {
     margin-bottom: 0;
+}
+
+.logo-brand {
+    margin-bottom: 0;
+}
+
+.logo-brand:hover {
+  color: gray;
+  text-decoration: none;
 }
 
 .nav-masthead .nav-link {
