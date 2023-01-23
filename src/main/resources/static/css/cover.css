@@ -64,7 +64,13 @@ body {
 }
 h{front-size: x-large}
 
-p2{front-size: large}
+h{front-size: x-large}
+
+h1{
+    front-size: large;
+    text-align: center;
+    color:green;
+}
 
 p1{front-size: medium}
 
@@ -75,33 +81,60 @@ p{
   front-family: arial;
   }
 
+p1{
+  text-align: left;
+  color: green;
+  front-family: arial;
+  }
+
+p4{
+  text-align: left;
+  color: white;
+  front-family: arial;
+  }
+p6{
+  text-align: center;
+}
+p5{
+  text-align: left;
+  color: gray;
+  front-family: arial;
+  }
 p2{
   text-align: center;
   color: gray;
   front-family: arial;
   }
+
+p2{
+  color: green;
+  front-family: arial;
+  }
+
+p3{
+  color: gray;
+  front-family: arial;
+  }
 h{
+   text-align: center;
+   color:white;
+   }
+
+h3{
    text-align: center;
    color:green;
    }
 a{
    color:grey
   }
-#Information {
-    border-radius: 20px;
-    border: 2px solid #73AD21;
-    padding: 10px;
-    width: 150px;
-    height: 100px;
+#Logo{
+    border-radius: 18px;
+      background: green;
+      padding: 20px;
+      width: 15px;
+      height: 10px;
     }
 
-#Help {
-    border-radius: 20px;
-    border: 2px solid #73AD21;
-    padding: 10px;
-    width: 150px;
-    height: 100px;
-    }
 
 
 a:hover{
