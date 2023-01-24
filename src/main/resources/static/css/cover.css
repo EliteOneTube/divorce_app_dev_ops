@@ -227,3 +227,14 @@ color: green;
     display: flex;
     flex-direction: row;
 }
+
+/*
+.loginForm{
+    border-color:1px solid red;
+    display:grid;
+    grid-template-columns:1fr;
+    grid-template-rows:repeat(2,1fr);
+    grid-column-gap:0px;
+    grid-row-gap:20px;
+}
+*/

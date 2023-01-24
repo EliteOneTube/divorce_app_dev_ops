@@ -28,4 +28,10 @@ public class IndexController{
 
     @GetMapping("/help")
     public String help() { return "help";}
+
+    @GetMapping("/contact")
+    public String contact() { return "contact";}
+
+    @GetMapping("/register")
+    public String register() { return "register";}
 }

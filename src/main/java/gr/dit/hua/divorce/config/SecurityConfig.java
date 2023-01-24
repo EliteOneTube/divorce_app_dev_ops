@@ -38,6 +38,7 @@ public class SecurityConfig  {
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/register").permitAll()
                 .requestMatchers("/login").permitAll()
+                .requestMatchers("/contact").permitAll()
                 .requestMatchers("/more_information").permitAll()
                 .requestMatchers("/help").permitAll()
                 .requestMatchers("/member/**").hasRole("ADMIN")
@@ -45,6 +46,9 @@ public class SecurityConfig  {
                 .requestMatchers("/divorce/getDivorces").hasRole("ADMIN")
                 .requestMatchers("/divorce/saveDivorce").hasRole("LAWYER")
                 .requestMatchers("/divorce/approveDivorce").hasRole("NOTARY")
+                .requestMatchers("/notary").hasRole("NOTARY")
+                .requestMatchers("/lawyer").hasRole("LAWYER")
+                .requestMatchers("/spouse").hasRole("SPOUSE")
                 .anyRequest().authenticated();
 
 
