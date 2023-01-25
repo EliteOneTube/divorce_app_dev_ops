@@ -1,13 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{notary_layout/layout}">
 <head>
     <meta charset="UTF-8">
     <title>Notary Page</title>
 </head>
 <body>
-<div layout:fragment ="main-content">
-    <h1>This is the Notary's Page</h1>
+ <header class="masthead mb-auto" th:fragment="header">
+
+    </header>
+ <div layout:fragment ="main-content">
+    <h1>Notary's Page</h1>
+     <p>Here will be the divorces that notary had been involved, is being involved</p>
+
 
 </div>
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:more_information="http://www.ultraq.net.nz/thymeleaf/more_information"
+      xmlns:help="http://www.ultraq.net.nz/thymeleaf/help"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 <head>
   <meta charset="UTF-8">
@@ -9,33 +9,32 @@
 <body>
 
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-  <header class="masthead mb-auto" th:replace="~{layout/header :: header}">
-    <div>
-      <h style="font-size:4vw">Help</h>
-    </div>
+<!--  <header class="masthead mb-auto" th:replace="~{layout/header :: header}">-->
+<!--    <div>-->
+<!--      <h style="font-size:4vw">Help</h>-->
+<!--    </div>-->
 
-  </header>
+<!--  </header>-->
 
 
-  <main role="main" class="inner cover" more_information:fragment="main-content">
-      If you need information about how to use our application
+  <main role="main" class="inner cover" layout:fragment="main-content">
+
     <div class="inner">
-      <a href="more_information.html" >
-        More information</a>
-    </div>
-    could be helpful
+      <p>We are here for you to help you as much as we can.</p>
+      <a href="contact.html" >Contact with us</a>
+            </div>
 
 
-  </main>
+          </main>
 
 
-  <footer class="mastfoot mt-auto" th:replace="~{layout/footer :: footer}" style="flex-direction: row;">
-    <div class="inner">
-      If you still do not know what to do press
-      <a href="more_information.html" >
-        More information</a>
-    </div>
-  </footer>
+        <!--  <footer class="mastfoot mt-auto" th:replace="~{layout/footer :: footer}" style="flex-direction: row;">-->
+<!--    <div class="inner">-->
+<!--      If you still do not know what to do press-->
+<!--      <a href="more_information.html" >-->
+<!--        More information</a>-->
+<!--    </div>-->
+<!--  </footer>-->
 </div>
 </body>
 </html>
