@@ -12,14 +12,18 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 public class UserController {
 
     @Autowired
@@ -30,6 +34,11 @@ public class UserController {
 
     @Autowired
     private MemberInfoDao memberInfoDao;
+
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public ModelAndView register() {
+        return new ModelAndView("register", "user", new UserDetails());
+    }
 
     @PostMapping("/register")
     public String processRegister(@Valid @RequestBody UserDetails userRegistrationObject, HttpServletResponse response) {
@@ -69,14 +78,14 @@ public class UserController {
         return "Registered successfully";
     }
 
-    @PostMapping("/login")
-    public boolean login(@Valid @RequestBody Users userLoginObject) {
-        if (jdbcUserDetailsManager.loadUserByUsername(userLoginObject.getUsername()) != null) {
-            if (passwordEncoder.matches(userLoginObject.getPassword(), jdbcUserDetailsManager.loadUserByUsername(userLoginObject.getUsername()).getPassword())) {
-                return true;
-            }
-        }
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(Model model, String error, String logout) {
+        if (error != null)
+            model.addAttribute("errorMsg", "Your username and password are invalid.");
 
-        return false;
+        if (logout != null)
+            model.addAttribute("msg", "You have been logged out successfully.");
+
+        return "login";
     }
 }
