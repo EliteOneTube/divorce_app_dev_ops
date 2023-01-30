@@ -11,41 +11,18 @@
     <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
         <main role="main" class="inner cover" layout:fragment="main-content">
             <div main-content class="inner">
-<!--                <form name="Log in" >-->
-<!--                    <div class="loginForm">-->
-<!--                    <div>-->
-<!--                        <label>Username</label>-->
-<!--                        <input type="text" name="login"/>-->
-<!--                    </div>-->
-<!--                    <div>-->
-<!--                        <label>Password</label>-->
-<!--                        <input type="password" name="password"/>-->
-<!--                    </div>-->
-<!--                    </div>-->
-                 <table class="center" border="1" style="width:68%">
-                     <tr style="height:100px">
-                          <th>
-                            <p2>Log in</p2>
-                          </th>
-                     </tr>
-                     <tr>
-                         <th style="height:200px">
-                             <p2>User Name</p2>
-                             <input type="text" name="login"/>
-
-                             <p></p>
-
-                             <p2>Password</p2>
-                             <input type="password" name="password"/>
-                             <p></p>
-                             <input type="submit" name="submit"/>
-                             <p></p>
-                             <p>Else press <a href="../register" >Sign in</a></p>
-                         </th>
-
-                     </tr>
-
-                 </table>
+                <form name="Log in" action="login" method='POST'>
+                    <div>
+                        <label>Username</label>
+                        <input type="text" name="username"/>
+                    </div>
+                    <div>
+                        <label>Password</label>
+                        <input type="password" name="password"/>
+                    </div>
+                    <div>
+                        <input type="submit" value="Log in"/>
+                    </div>
                 </form>
             </div>
         </main>

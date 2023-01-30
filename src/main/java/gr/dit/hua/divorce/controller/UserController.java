@@ -14,10 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -40,11 +37,13 @@ public class UserController {
         return new ModelAndView("register", "user", new UserDetails());
     }
 
-    @PostMapping("/register")
-    public String processRegister(@Valid @RequestBody UserDetails userRegistrationObject, HttpServletResponse response) {
+    //TODO return error messages to the user in case of error
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ModelAndView processRegister(@ModelAttribute("user") UserDetails userRegistrationObject, HttpServletResponse response) {
         if(userRegistrationObject.getRole().toUpperCase().equals("ADMIN")){
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            return "Admins cannot be registered";
+            //return "You cannot register as an admin";
+            return new ModelAndView("register", "user", userRegistrationObject);
         }
 
         // authorities to be granted
@@ -53,13 +52,15 @@ public class UserController {
 
         if(jdbcUserDetailsManager.userExists(userRegistrationObject.getUsername())) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
-            return "Username already exists";
+            //return "Username already exists";
+            return new ModelAndView("register", "user", userRegistrationObject);
         }
 
         //check if tax number exists
         if(memberInfoDao.findByTaxNumber(userRegistrationObject.getTaxNumber()) != null) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
-            return "Tax number already exists";
+            //return "Tax number already exists";
+            return new ModelAndView("register", "user", userRegistrationObject);
         }
 
         User user = new User(userRegistrationObject.getUsername(), passwordEncoder.encode(userRegistrationObject.getPassword()), authorities);
@@ -75,7 +76,7 @@ public class UserController {
 
         memberInfoDao.save(memberInfo);
 
-        return "Registered successfully";
+        return new ModelAndView("redirect:/");
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

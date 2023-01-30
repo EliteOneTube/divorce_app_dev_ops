@@ -37,7 +37,6 @@ public class SecurityConfig  {
                 .authorizeRequests()
                 .requestMatchers("/").permitAll()
                 .requestMatchers("/register").permitAll()
-                .requestMatchers("/login").permitAll()
                 .requestMatchers("/contact").permitAll()
                 .requestMatchers("/more_information").permitAll()
                 .requestMatchers("/help").permitAll()
@@ -49,7 +48,9 @@ public class SecurityConfig  {
                 .requestMatchers("/notary").hasRole("NOTARY")
                 .requestMatchers("/lawyer").hasRole("LAWYER")
                 .requestMatchers("/spouse").hasRole("SPOUSE")
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+                .and().formLogin().loginPage("/login").defaultSuccessUrl("/", true).permitAll()
+                .and().logout();
 
 
 
