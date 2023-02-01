@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html lang="en" xmlns:th="http://thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -14,7 +14,7 @@
                     </a>
                 </div>
                 <nav class="nav nav-masthead justify-content-center">
-                    <a class="nav-link active" href="/">Home</a>
+                    <a class="nav-link active" href="/" th:href="@{/}">Home</a>
                     <a sec:authorize="!isAuthenticated()" class="nav-link" href="/login" th:href="@{/login}">Login</a>
                     <a sec:authorize="isAuthenticated()" class="nav-link fw-bold py-1 px-0" href="/logout" th:href="@{/logout}">Logout</a>
                     <a sec:authorize="!isAuthenticated()" class="nav-link fw-bold py-1 px-0" href="/register" th:href="@{/register}">Register</a>
@@ -24,19 +24,7 @@
     </div>
 </header>
 
-<!--TODO switch active link & make authorze work-->
-<script>
-    $(document).ready(function() {
-        $( ".nav-link" ).bind( "click", function(event) {
-            event.preventDefault();
-            const clickedItem = $(this);
-            $( ".nav-link" ).each( function() {
-                $( this ).removeClass( "active" );
-            });
-            clickedItem.addClass( "active" );
-        });
-    });
-</script>
+<!--TODO switch active link & make authorize work-->
 
 </body>
 </html>
