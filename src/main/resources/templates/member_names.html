@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:member_names="http://www.ultraq.net.nz/thymeleaf/member_names"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>More information</title>
+</head>
+<body>
+
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+  <main role="main" class="inner cover" layout:fragment="main-content">
+
+
+<!--         Trigger/Open The Modal -->
+        <button id="myBtn">Open Modal</button>
+
+<!--         The Modal -->
+        <div id="myModal" class="modal">
+
+<!--           Modal content -->
+          <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Some text in the Modal..</p>
+          </div>
+
+        </div>
+          </main>
+</div>
+
+</body>
+</html>

@@ -28,4 +28,13 @@ public class IndexController{
 
     @GetMapping("/contact")
     public String contact() { return "contact";}
+
+    @GetMapping("/cdp")
+    public String cdp() { return "cdp";}
+
+    @GetMapping("/member_names")
+    public String member_names() { return "member_names";}
+
+    @GetMapping("/document_details")
+    public String document_details() { return "document_details";}
 }

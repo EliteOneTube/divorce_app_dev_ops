@@ -24,6 +24,64 @@ a:hover {
 /*
  * Base structure
  */
+ /* The Modal (background) */
+ .modal {
+   display: none; /* Hidden by default */
+   position: fixed; /* Stay in place */
+   z-index: 1; /* Sit on top */
+   left: 0;
+   top: 0;
+   width: 100%; /* Full width */
+   height: 100%; /* Full height */
+   overflow: auto; /* Enable scroll if needed */
+   background-color: rgb(0,0,0); /* Fallback color */
+   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+ }
+
+ /* Modal Content/Box */
+ .modal-content {
+   background-color: #fefefe;
+   margin: 15% auto; /* 15% from the top and centered */
+   padding: 20px;
+   border: 1px solid #888;
+   width: 80%; /* Could be more or less, depending on screen size */
+ }
+
+ /* The Close Button */
+ .close {
+   color: #aaa;
+   float: right;
+   font-size: 28px;
+   font-weight: bold;
+ }
+
+ .close:hover,
+ .close:focus {
+   color: black;
+   text-decoration: none;
+   cursor: pointer;
+ }
+
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+.button1 {padding: 10px 24px;
+          border-radius: 12px;}
+
+.button1:hover {
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+
+
 table{
   border: 1px gray;
   border-collapse: collapse;
@@ -131,7 +189,11 @@ h3{
 a{
    color:grey
   }
+p8{
+   color:black
+}
 #Logo{
+    text-decoration:none;
     border-radius: 18px;
     background: green;
     padding: 20px;
@@ -145,7 +207,9 @@ a:hover{
 color: green;
 }
 
-.Lucida_Handwriting {font-family:Lucida Handwriting;}
+.Lucida_Handwriting {font-family:Lucida Handwriting;
+    text-decoration:none;
+}
 
 
 .cover-container {
@@ -167,12 +231,14 @@ color: green;
 }
 
 .logo-brand {
+    text-decoration:none;
     margin-bottom: 0;
 }
 
 .logo-brand:hover {
-  color: gray;
-  text-decoration: none;
+    text-decoration:none;
+    color: gray;
+    text-decoration: none;
 }
 
 .nav-masthead .nav-link {
@@ -238,3 +304,17 @@ color: green;
     grid-row-gap:20px;
 }
 */
+
+.help_contact_link{
+    text-decoration:none;
+    background-color: #8A817C;
+    border-radius:8px;
+    width:80px;
+    height:20px;
+    padding:5px;
+}
+
+.help_contact_link:hover{
+    text-decoration:none;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
