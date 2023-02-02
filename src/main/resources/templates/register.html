@@ -52,8 +52,17 @@
                    name="submit"/>
 
         </form>
+
+        <div th:if="${errorMsg}">
+            <div th:replace='~{layout/notification :: notification(${errorMsg})}' ></div>
+
+            <script>
+                setTimeout( () => {
+                    document.getElementById("notification").innerHTML = "";
+                }, 5000);
+            </script>
+        </div>
     </main>
 </div>
-
 </body>
 </html>

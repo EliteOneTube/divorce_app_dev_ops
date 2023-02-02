@@ -40,20 +40,60 @@ public class UserController {
     //TODO return error messages to the user in case of error
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView processRegister(@ModelAttribute("user") UserDetails userRegistrationObject, HttpServletResponse response) {
+        ModelAndView modelAndView = new ModelAndView("register", "user", new UserDetails());
+
+        //If any of the fields is empty
+        if(userRegistrationObject.getUsername().isEmpty() || userRegistrationObject.getPassword().isEmpty() || userRegistrationObject.getRole().isEmpty() || userRegistrationObject.getTaxNumber().isEmpty() || userRegistrationObject.getEmail().isEmpty() || userRegistrationObject.getFullName().isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            //return "All fields are required";
+            modelAndView.addObject("errorMsg", "All fields are required");
+            return modelAndView;
+        }
+
+        //If the role is not user or admin
         if(userRegistrationObject.getRole().toUpperCase().equals("ADMIN")){
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             //return "You cannot register as an admin";
-            return new ModelAndView("register", "user", userRegistrationObject);
+            modelAndView.addObject("errorMsg", "You cannot register as an admin");
+            return modelAndView;
         }
 
         // authorities to be granted
-        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_" + userRegistrationObject.getRole().toUpperCase()));
 
+        //check if username exists
         if(jdbcUserDetailsManager.userExists(userRegistrationObject.getUsername())) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
             //return "Username already exists";
-            return new ModelAndView("register", "user", userRegistrationObject);
+            modelAndView.addObject("errorMsg", "Username already exists");
+            return modelAndView;
+        }
+
+        //check if email is valid
+        if(!userRegistrationObject.getEmail().matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            //return "Email is not valid";
+            modelAndView.addObject("errorMsg", "Email is not valid");
+            return modelAndView;
+        }
+
+        //check if tax number is numeric
+        try {
+            Long.parseLong(userRegistrationObject.getTaxNumber());
+        } catch (NumberFormatException e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            //return "Tax number is not valid";
+            modelAndView.addObject("errorMsg", "Tax number is not valid. Must be numeric");
+            return modelAndView;
+        }
+
+        //check if tax number is valid
+        if(userRegistrationObject.getTaxNumber().length() != 9) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            //return "Tax number is not valid";
+            modelAndView.addObject("errorMsg", "Tax number is not valid. Length must be 9 digits");
+            return modelAndView;
         }
 
         //check if tax number exists
@@ -82,7 +122,7 @@ public class UserController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model, String error, String logout) {
         if (error != null)
-            model.addAttribute("errorMsg", "Your username and password are invalid.");
+            model.addAttribute("errorMsg", "Your username or password are invalid.");
 
         if (logout != null)
             model.addAttribute("msg", "You have been logged out successfully.");
