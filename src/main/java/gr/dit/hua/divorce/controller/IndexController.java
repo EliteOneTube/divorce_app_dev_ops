@@ -28,4 +28,22 @@ public class IndexController{
 
     @GetMapping("/contact")
     public String contact() { return "contact";}
+
+    @GetMapping("/cdp")
+    public String cdp() { return "cdp";}
+
+    @GetMapping("/member_names")
+    public String member_names() { return "member_names";}
+
+    @GetMapping("/document_details")
+    public String document_details() { return "document_details";}
+
+    @GetMapping("/divorce_confirmation")
+    public String divorce_confirmation() { return "divorce_confirmation";}
+
+    @GetMapping("/divorce_cancellation")
+    public String divorce_cancellation() { return "divorce_cancellation";}
+
+    @GetMapping("/account_details")
+    public String account_details() { return "account_details";}
 }

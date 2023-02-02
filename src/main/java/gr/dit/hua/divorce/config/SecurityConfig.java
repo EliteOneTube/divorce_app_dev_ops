@@ -45,6 +45,13 @@ public class SecurityConfig {
                 .requestMatchers("/notary").hasRole("NOTARY")
                 .requestMatchers("/lawyer").hasRole("LAWYER")
                 .requestMatchers("/spouse").hasRole("SPOUSE")
+                .requestMatchers("/cdp").permitAll()
+                .requestMatchers("/member_names").permitAll()
+                .requestMatchers("/document_details").permitAll()
+                .requestMatchers("/divorce_confirmation").permitAll()
+                .requestMatchers("/divorce_cancellation").permitAll()
+                .requestMatchers("/account_details").permitAll()
+                //μόλις φτιαχτεί να το αλλάξω
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").defaultSuccessUrl("/", true).permitAll()
                 .and().logout();
