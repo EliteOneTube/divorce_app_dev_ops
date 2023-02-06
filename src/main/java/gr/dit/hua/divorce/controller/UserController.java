@@ -40,7 +40,7 @@ public class UserController {
     //TODO return error messages to the user in case of error
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView processRegister(@ModelAttribute("user") UserDetails userRegistrationObject, HttpServletResponse response) {
-        ModelAndView modelAndView = new ModelAndView("register", "user", new UserDetails());
+        ModelAndView modelAndView = new ModelAndView("register", "user", userRegistrationObject);
 
         //If any of the fields is empty
         if(userRegistrationObject.getUsername().isEmpty() || userRegistrationObject.getPassword().isEmpty() || userRegistrationObject.getRole().isEmpty() || userRegistrationObject.getTaxNumber().isEmpty() || userRegistrationObject.getEmail().isEmpty() || userRegistrationObject.getFullName().isEmpty()) {

@@ -18,10 +18,13 @@
                     <a sec:authorize="!isAuthenticated()" class="nav-link" href="/login" th:href="@{/login}">Login</a>
                     <a sec:authorize="isAuthenticated()" class="nav-link fw-bold py-1 px-0" href="/logout" th:href="@{/logout}">Logout</a>
                     <a sec:authorize="!isAuthenticated()" class="nav-link fw-bold py-1 px-0" href="/register" th:href="@{/register}">Register</a>
-                    <a sec:authorize="!isAuthenticated()" class="nav-link fw-bold py-1 px-0" href="/cdp" th:href="@{/cdp}">Commencement of divorce proceedings</a>
-                    <a sec:authorize="!isAuthenticated()" class="nav-link fw-bold py-1 px-0" href="/divorce_confirmation" th:href="@{/divorce_confirmation}">Confirm your divorce</a>
-                    <a sec:authorize="!isAuthenticated()" class="nav-link fw-bold py-1 px-0" href="/divorce_cancelation" th:href="@{/divorce_confirmation}">Cancel your divorce</a>
-                    <a sec:authorize="!isAuthenticated()" class="nav-link fw-bold py-1 px-0" href="/account_details" th:href="@{/account_details}">Fill in the account’s details</a>
+<!--                    <a sec:authorize="!isAuthenticated()" class="nav-link fw-bold py-1 px-0" href="/cdp" th:href="@{/cdp}">Commencement of divorce proceedings</a>-->
+<!--                    <a sec:authorize="!isAuthenticated()" class="nav-link fw-bold py-1 px-0" href="/divorce_confirmation" th:href="@{/divorce_confirmation}">Confirm your divorce</a>-->
+<!--                    <a sec:authorize="!isAuthenticated()" class="nav-link fw-bold py-1 px-0" href="/divorce_cancellation" th:href="@{/divorce_cancellation}">Cancel your divorce</a>-->
+<!--                    <a sec:authorize="!isAuthenticated()" class="nav-link fw-bold py-1 px-0" href="/account_details" th:href="@{/account_details}">Fill in the account’s details</a>-->
+                    <a sec:authorize="hasRole('LAWYER')" class="nav-link fw-bold py-1 px-0" href="/lawyer" th:href="@{/lawyer}">Lawyer</a>
+                    <a sec:authorize="hasRole('NOTARY')" class="nav-link fw-bold py-1 px-0" href="/notary" th:href="@{/notary}">Notary</a>
+                    <a sec:authorize="hasRole('SPOUSE')" class="nav-link fw-bold py-1 px-0" href="/spouse" th:href="@{/spouse}">Lawyer</a>
                     <a class="nav-link" href="/contact">Contact</a>
                 </nav>
             </div>
