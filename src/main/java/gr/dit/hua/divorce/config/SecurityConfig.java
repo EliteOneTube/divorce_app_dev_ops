@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .requestMatchers("/more_information").permitAll()
                 .requestMatchers("/help").permitAll()
                 .requestMatchers("/member/**").hasRole("ADMIN")
+                .requestMatchers("/my_divorces" ).hasAnyRole("LAWYER", "SPOUSE", "NOTARY")
                 .requestMatchers("/divorce/deleteDivorce").hasRole("LAWYER")
                 .requestMatchers("/divorce/getDivorces").hasRole("ADMIN")
                 .requestMatchers("/divorce/saveDivorce").hasRole("LAWYER")

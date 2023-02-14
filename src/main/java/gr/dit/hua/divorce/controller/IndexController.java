@@ -46,4 +46,7 @@ public class IndexController{
 
     @GetMapping("/account_details")
     public String account_details() { return "account_details";}
+
+    @GetMapping("/my_divorces")
+    public String my_divorces() { return "my_divorces";}
 }
