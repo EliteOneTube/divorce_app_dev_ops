@@ -8,17 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("")
 public class IndexController{
-    @GetMapping("/notary")
-    public String notary() { return "notary";}
 
     @GetMapping("/admin/index")
     public String admin() { return "admin/index";}
 
-    @GetMapping("/spouse")
-    public String spouse() { return "spouse";}
-
-    @GetMapping("/lawyer")
-    public String lawyer() { return "lawyer";}
 
     @GetMapping("/more_information")
     public String more_information() { return "more_information";}
@@ -38,8 +31,8 @@ public class IndexController{
     @GetMapping("/document_details")
     public String document_details() { return "document_details";}
 
-    @GetMapping("/divorce_confirmation")
-    public String divorce_confirmation() { return "divorce_confirmation";}
+    @GetMapping("/confirmation_of_divorce")
+    public String confirmation_of_divorce() { return "confirmation_of_divorce";}
 
     @GetMapping("/divorce_cancellation")
     public String divorce_cancellation() { return "divorce_cancellation";}

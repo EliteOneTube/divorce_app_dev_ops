@@ -4,13 +4,66 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 <head>
   <meta charset="UTF-8">
-  <title>More information</title>
+  <title>Member info</title>
 </head>
 <body>
 
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
   <main role="main" class="inner cover" layout:fragment="main-content">
-    TODO
+
+    <form name="Member information" method='POST'>
+      <div>
+        <label>Other lawyer's name</label>
+        <input type="text" name="other lawyer's name"/>
+      </div>
+      <div>
+        <label>Other lawyer's last name</label>
+        <input type="text" name="other lawyer's last name"/>
+      </div>
+      <div class="form-outline mb-4">
+        <label>Other lawyer's AFM/AMKA</label>
+        <input type="text" name="other lawyer's AFM/AMKA"/>
+      </div>
+      <div>
+        <label>Notary's name</label>
+        <input type="text" name="other lawyer's name"/>
+      </div>
+      <div>
+        <label>Notary's last name</label>
+        <input type="text" name="other lawyer's last name"/>
+      </div>
+      <div class="form-outline mb-4">
+        <label>Notary's AFM/AMKA</label>
+        <input type="text" name="other lawyer's AFM/AMKA"/>
+      </div>
+      <div>
+        <label>Spouse's 1 name</label>
+        <input type="text" name="other lawyer's name"/>
+      </div>
+      <div>
+        <label>Spouse's 1 last name</label>
+        <input type="text" name="other lawyer's last name"/>
+      </div>
+      <div class="form-outline mb-4">
+        <label>Spouse's 1 AFM/AMKA</label>
+        <input type="text" name="other lawyer's AFM/AMKA"/>
+      </div>
+      <div>
+        <label>Spouse's 2 name</label>
+        <input type="text" name="other lawyer's name"/>
+      </div>
+      <div>
+        <label>Spouse's 2 last name</label>
+        <input type="text" name="other lawyer's last name"/>
+      </div>
+      <div class="form-outline mb-4">
+        <label>Spouse's 2 AFM/AMKA</label>
+        <input type="text" name="other lawyer's AFM/AMKA"/>
+      </div>
+      <div>
+        <input type="submit" value="Log in"/>
+      </div>
+    </form>
 <!--    <form action="/action_page.php">-->
 <!--      <label for="fname">First name:</label><br>-->
 <!--      <input type="text" id="fname" name="fname" value="John"><br>-->

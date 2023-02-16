@@ -43,18 +43,15 @@ public class SecurityConfig {
                 .requestMatchers("/divorce/getDivorces").hasRole("ADMIN")
                 .requestMatchers("/divorce/saveDivorce").hasRole("LAWYER")
                 .requestMatchers("/divorce/approveDivorce").hasRole("NOTARY")
-                .requestMatchers("/notary").hasRole("NOTARY")
-                .requestMatchers("/lawyer").hasRole("LAWYER")
-                .requestMatchers("/spouse").hasRole("SPOUSE")
                 .requestMatchers("/cdp").permitAll()
                 .requestMatchers("/member_names").permitAll()
                 .requestMatchers("/document_details").permitAll()
-                .requestMatchers("/divorce_confirmation").permitAll()
-                .requestMatchers("/divorce_cancellation").permitAll()
+                .requestMatchers("/confirmation_of_divorce").hasAnyRole("SPOUSE", "LAWYER")
+                .requestMatchers("/divorce_cancellation").hasRole("LAWYER")
                 .requestMatchers("/account_details").permitAll()
                 //μόλις φτιαχτεί να το αλλάξω
                 .anyRequest().authenticated()
-                .and().formLogin().loginPage("/login").defaultSuccessUrl("/", true).permitAll()
+                .and().formLogin().loginPage("/login").defaultSuccessUrl("/my_divorces", true).permitAll()
                 .and().logout();
 
 
