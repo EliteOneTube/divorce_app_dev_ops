@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>My divorces</title>
@@ -12,33 +12,47 @@
 
     <form name="My divorces">
         <table class="center" border="1" style="width:68%">
-            <tr style="height:100px">
-                <th>
-                    <p2>Finished divorces</p2>
-                    <p> 1
-                        2
-                        3...
-                    </p>
-                </th>
-            </tr>
-            <tr>
-                <th style="height:200px">
-                    <p2>Divorce in progress</p2>
-                    <p> 1
-                        2
-                        3...
-                    </p>
-                    <div>
-                        <!--Να φαίνεται μόνο στους lawyer και spouse-->
-                        <input type="submit" value="Approval"/>
-                        <!--Να φαίνεται μόνο στους lawyer-->
-                        <input type="submit" value="Cancel"/>
-                    </div>
-                </th>
+            <th>Divorce ID</th>
+            <th>Created at</th>
+            <th>Child support</th>
+            <th>Restore name</th>
+            <th>Status</th>
+            <th th:if="${#authorization.expression('hasAnyRole(''LAWYER'', ''SPOUSE'')')}">Approve</th>
+            <th th:if="${#authorization.expression('hasRole(''LAWYER'')')}">Cancel</th>
+            <th th:if="${#authorization.expression('hasRole(''NOTARY'')')}">Accept</th>
+            <tr th:each="divorce : ${divorces}">
+                <td th:text="${divorce.getId()}"></td>
+                <td th:text="${divorce.getCreated_at()}"></td>
+                <td th:text="${divorce.getChildSupport()}"/>
+                <td th:text="${divorce.getRestoreName()}"/>
+                <td th:text="${divorce.getStatus()}"/>
+                <td th:if="${#authorization.expression('hasAnyRole(''LAWYER'', ''SPOUSE'')')} and ${divorce.getStatus().toLowerCase().equals('pending')}">
+                    <button type="submit" th:id="${divorce.getId()}"
+                            name="approveDivorce"><i class="remove user icon"></i>
+                        Approve</button>
+                </td>
+                <td th:if="${#authorization.expression('hasRole(''LAWYER'')')} and ${divorce.getStatus().toLowerCase().equals('pending')}">
+                    <button type="submit" th:id="${divorce.getId()}"
+                            name="cancelDivorce"><i class="remove user icon"></i>
+                        Cancel</button>
+                </td>
+                <td th:if="${#authorization.expression('hasRole(''NOTARY'')')} and ${divorce.getStatus().toLowerCase().equals('pending')}">
+                    <button type="submit" th:id="${divorce.getId()}"
+                            name="acceptDivorce"><i class="remove user icon"></i>
+                        Accept</button>
+                </td>
+                <td th:if="${#authorization.expression('hasAnyRole(''LAWYER'', ''SPOUSE'')')} and ${divorce.getStatus().toLowerCase().equals('approved')}">
+                    Divorce Filed
+                </td>
+                <td th:if="${#authorization.expression('hasRole(''LAWYER'')')} and ${divorce.getStatus().toLowerCase().equals('approved')}">
+                    Divorce Filed
+                </td>
+                <td th:if="${#authorization.expression('hasRole(''NOTARY'')')} and ${divorce.getStatus().toLowerCase().equals('approved')}">
+                    Divorce Filed
+                </td>
             </tr>
         </table>
     </form>
 </div>
-
 </body>
 </html>

@@ -14,4 +14,6 @@ public interface DivorceDao {
     public List<DivorcePaper> findByTaxNumber(String taxNumber);
 
     public List<DivorcePaper> findByMembers(DivorceInfo divorceInfo);
+
+    public List<DivorcePaper> findByUsername(String username);
 }

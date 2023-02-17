@@ -1,13 +1,23 @@
 package gr.dit.hua.divorce.controller;
 
+import gr.dit.hua.divorce.dao.DivorceDao;
+import gr.dit.hua.divorce.entity.DivorcePaper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.security.Principal;
+import java.util.List;
 
 
 @Controller
 @RequestMapping("")
 public class IndexController{
+
+    @Autowired
+    private DivorceDao divorceDao;
 
     @GetMapping("/admin/index")
     public String admin() { return "admin/index";}
@@ -41,5 +51,9 @@ public class IndexController{
     public String account_details() { return "account_details";}
 
     @GetMapping("/my_divorces")
-    public String my_divorces() { return "my_divorces";}
+    public String my_divorces(Model model, Principal principal) {
+        List<DivorcePaper> divorces = divorceDao.findByUsername(principal.getName());
+        model.addAttribute("divorces", divorces);
+        return "my_divorces";
+    }
 }

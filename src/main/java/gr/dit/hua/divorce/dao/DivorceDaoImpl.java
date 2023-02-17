@@ -63,6 +63,7 @@ public class DivorceDaoImpl implements DivorceDao {
     }
 
     @Override
+    @Transactional
     public List<DivorcePaper> findByMembers(DivorceInfo divorceInfo) {
         MemberInfo spouse1 = memberInfoDao.findByTaxNumber(divorceInfo.getSpouse1());
         MemberInfo spouse2 = memberInfoDao.findByTaxNumber(divorceInfo.getSpouse2());
@@ -72,6 +73,14 @@ public class DivorceDaoImpl implements DivorceDao {
         } else {
             return null;
         }
+    }
+
+    @Override
+    @Transactional
+    public List<DivorcePaper> findByUsername(String username) {
+        MemberInfo memberInfo = memberInfoDao.findByUsername(username);
+
+        return memberInfo.getDivorcePapers();
     }
 
 }
