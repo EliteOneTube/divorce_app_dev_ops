@@ -54,5 +54,23 @@
         </table>
     </form>
 </div>
+
+
+<script type="text/javascript">
+    $("[name='cancelDivorce']").click(() => {
+        const urlCall = "/divorce/deleteDivorce/" + $(this).attr("id");
+        $.ajax({
+            url: urlCall,
+            type: "POST",
+            success: function (result) {
+                alert("Divorce canceled");
+                //location.reload();
+            },
+            error: function (result) {
+                alert("Divorce not canceled");
+            }
+        });
+    });
+</script>
 </body>
 </html>

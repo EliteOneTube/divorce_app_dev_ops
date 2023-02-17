@@ -10,6 +10,7 @@ import gr.dit.hua.divorce.templates.NotarialInfo;
 import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import org.hibernate.validator.internal.util.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.ui.Model;
@@ -33,7 +34,8 @@ public class DivorceController {
     MemberInfoDao memberInfoDao;
 
     @PostMapping("/deleteDivorce/{id}")
-    public void deleteDivorce(@PathVariable Integer id, Principal principal, HttpServletResponse response) {
+    public void deleteDivorce(@PathVariable int id, Principal principal, HttpServletResponse response) {
+        System.out.println("Deleting divorce paper with id: " + id);
         DivorcePaper divorcePaper = divorceDao.findById(id);
 
         //check if divorce paper exists
@@ -60,7 +62,7 @@ public class DivorceController {
     }
 
     @GetMapping("/getDivorce")
-    public DivorcePaper getDivorce(Integer id) {
+    public DivorcePaper getDivorce(int id) {
         return divorceDao.findById(id);
     }
 
@@ -143,7 +145,7 @@ public class DivorceController {
     }
 
     @PostMapping("/acceptDivorce/{id}")
-    public String acceptDivorce(@PathVariable Integer id, HttpServletResponse response, Principal principal) {
+    public String acceptDivorce(@PathVariable int id, HttpServletResponse response, Principal principal) {
         DivorcePaper divorce = divorceDao.findById(id);
 
         if(divorce == null) {
