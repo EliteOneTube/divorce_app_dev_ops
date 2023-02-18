@@ -153,6 +153,11 @@ public class DivorceController {
             return "Divorce paper does not exist";
         }
 
+        if(divorce.getNotarialActionId() == null) {
+            response.setStatus(403);
+            return "You haven't included the notarial action id";
+        }
+
         MemberInfo memberInfo = memberInfoDao.findByUsername(principal.getName());
 
         //check if user is included in divorce

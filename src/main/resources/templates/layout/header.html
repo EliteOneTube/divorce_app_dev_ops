@@ -21,7 +21,7 @@
                     <a sec:authorize="!isAuthenticated()" class="nav-link fw-bold py-1 px-0" href="/register" th:href="@{/register}">Register</a>
                     <a sec:authorize="isAuthenticated()" class="nav-link fw-bold py-1 px-0" href="/my_divorces" th:href="@{/my_divorces}">My Divorces</a>
                     <a sec:authorize="isAuthenticated()" class="nav-link fw-bold py-1 px-0" href="/cdp" th:href="@{/cdp}">Create a divorce</a>
-                    <a sec:authorize="hasRole('LAWYER')" class="nav-link fw-bold py-1 px-0" href="/account details" th:href="@{/account_details}">Insert notarial instrument</a>
+                    <a sec:authorize="hasRole('NOTARY')" class="nav-link fw-bold py-1 px-0" href="/account details" th:href="@{/account_details}">Insert notarial instrument</a>
 <!--                    <a sec:authorize="isAuthenticated()" class="nav-link" href="/confirmation_of_divorce">Confirmation of divorce</a>-->
 <!--                    <a sec:authorize="hasRole('LAWYER')" class="nav-link" href="/divorce_cancellation">Cancel your divorce</a>-->
 <!--                    <a sec:authorize="!isAuthenticated()" class="nav-link fw-bold py-1 px-0" href="/cdp" th:href="@{/cdp}">Commencement of divorce proceedings</a>-->
