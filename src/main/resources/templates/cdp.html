@@ -10,14 +10,85 @@
 
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
     <main role="main" class="inner cover" layout:fragment="main-content">
+        <form name="divorceInfo">
+            <div class="form-outline mb-4">
+                <label>Your Tax Number</label>
+                <input type="text" name="taxNumber"/>
+            </div>
+            <div class="form-outline mb-4">
+                <label>Spouse's Tax Number</label>
+                <input type="text" name="spouseTaxNumber"/>
+            </div>
+            <div class="form-outline mb-4">
+                <label>Lawyer's Tax Number</label>
+                <input type="text" name="lawyerTaxNumber"/>
+            </div>
+            <div class="form-outline mb-4">
+                <label>Notary's Tax Number</label>
+                <input type="text" name="notaryTaxNumber"/>
+            </div>
+            <div class="form-outline mb-4">
+                <label>Your client's TaxNumber</label>
+                <input type="text" name="clientTaxNumber"/>
+            </div>
+            <div class="form-outline mb-4">
+                <label>Restore client's name</label>
+                <input type="checkbox" name="restoreName"/>
+            </div>
+            <div class="form-outline mb-4">
+                <label>Child Support</label>
+                <input type="number" name="childSupport"/>
+            </div>
+            <div class="form-outline mb-4">
+                <label>Number of children</label>
+                <input type="text" name="numberOfChildren"/>
+            </div>
+            <input type="submit" name="submitButton">
+        </form>
 
-        <button class="button button1">
-            <a href="../member_names" >insert member's names</a>
-        </button>
-        <button class="button button1">
-            <a href="../document_details" >insert document’s details</a>
-        </button>
+        <script type="text/javascript">
+            $("[name='submitButton']").click(() => {
 
+                const taxNumber = $("[name='taxNumber']").val();
+                const spouseTaxNumber = $("[name='spouseTaxNumber']").val();
+                const lawyerTaxNumber = $("[name='lawyerTaxNumber']").val();
+                const notaryTaxNumber = $("[name='notaryTaxNumber']").val();
+                const clientTaxNumber = $("[name='clientTaxNumber']").val();
+                const childSupport = $("[name='childSupport']").val();
+                const restoreName = $("[name='restoreName']").is(":checked");
+                const numberOfChildren = $("[name='numberOfChildren']").val();
+
+                if(taxNumber === "" || spouseTaxNumber === "" || lawyerTaxNumber === "" || notaryTaxNumber === "" || clientTaxNumber === "" || childSupport === "" || numberOfChildren === ""){
+                    alert("Please fill all the fields");
+                    return;
+                }
+
+                const urlCall = "/divorce/saveDivorce";
+                const data = {
+                    "lawyer1": taxNumber,
+                    "spouse2": spouseTaxNumber,
+                    "lawyer2": lawyerTaxNumber,
+                    "notary": notaryTaxNumber,
+                    "spouse1": clientTaxNumber,
+                    "childSupport": parseFloat(childSupport),
+                    "restoreName": restoreName,
+                    "numberOfChildren": parseInt(numberOfChildren)
+                };
+
+                $.ajax({
+                    url: urlCall,
+                    type: "POST",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert("Divorce successfully created");
+                    },
+                    error: function (data) {
+                        alert("Error creating divorce");
+                    }
+                });
+            });
+        </script>
     </main>
 </div>
 </body>

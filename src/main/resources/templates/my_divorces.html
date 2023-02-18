@@ -28,8 +28,8 @@
                 <td th:text="${divorce.getStatus()}"/>
                 <td th:if="${#authorization.expression('hasAnyRole(''LAWYER'', ''SPOUSE'')')} and ${divorce.getStatus().toLowerCase().equals('pending')}">
                     <button type="submit" th:id="${divorce.getId()}"
-                            name="approveDivorce"><i class="remove user icon"></i>
-                        Approve</button>
+                            name="acceptDivorce"><i class="remove user icon"></i>
+                        Accept</button>
                 </td>
                 <td th:if="${#authorization.expression('hasRole(''LAWYER'')')} and ${divorce.getStatus().toLowerCase().equals('pending')}">
                     <button type="submit" th:id="${divorce.getId()}"
@@ -38,8 +38,8 @@
                 </td>
                 <td th:if="${#authorization.expression('hasRole(''NOTARY'')')} and ${divorce.getStatus().toLowerCase().equals('pending')}">
                     <button type="submit" th:id="${divorce.getId()}"
-                            name="acceptDivorce"><i class="remove user icon"></i>
-                        Accept</button>
+                            name="approveDivorce"><i class="remove user icon"></i>
+                        Approve</button>
                 </td>
                 <td th:if="${#authorization.expression('hasAnyRole(''LAWYER'', ''SPOUSE'')')} and ${divorce.getStatus().toLowerCase().equals('approved')}">
                     Divorce Filed
@@ -53,24 +53,74 @@
             </tr>
         </table>
     </form>
-</div>
 
-
-<script type="text/javascript">
-    $("[name='cancelDivorce']").click(() => {
-        const urlCall = "/divorce/deleteDivorce/" + $(this).attr("id");
-        $.ajax({
-            url: urlCall,
-            type: "POST",
-            success: function (result) {
-                alert("Divorce canceled");
-                //location.reload();
-            },
-            error: function (result) {
-                alert("Divorce not canceled");
-            }
+    <script type="text/javascript">
+        $("[name='cancelDivorce']").click(() => {
+            const urlCall = "/divorce/deleteDivorce/" + $("[name='cancelDivorce']").attr("id");
+            $.ajax({
+                url: urlCall,
+                type: "POST",
+                success: function (result) {
+                    alert("Divorce canceled");
+                    location.reload();
+                },
+                error: function (error) {
+                    alert(error.message)
+                }
+            });
         });
-    });
-</script>
+
+        $("[name='acceptDivorce']").click(() => {
+            const urlCall = "/divorce/acceptDivorce/" + $("[name='acceptDivorce']").attr("id");
+            $.ajax({
+                url: urlCall,
+                type: "POST",
+                success: function (result) {
+                    location.reload();
+                },
+                error: function (xhr, exception) {
+                    switch (xhr.status) {
+                        case 400:
+                            alert("Divorce already accepted");
+                            break;
+                        case 401:
+                            alert("You are not authorized to accept this divorce");
+                            break;
+                        case 403:
+                            alert("You are not authorized to accept this divorce");
+                            break;
+                        case 404:
+                            alert("Divorce not found");
+                            break;
+                        case 500:
+                            alert("Internal server error");
+                            break;
+                        case 409:
+                            alert("Divorce already accepted");
+                            break;
+                        default:
+                            alert("Something went wrong");
+                    }
+                }
+            });
+        });
+
+        $("[name='approveDivorce']").click(() => {
+            const urlCall = "/divorce/approveDivorce/" + $("[name='approveDivorce']").attr("id");
+            $.ajax({
+                url: urlCall,
+                type: "POST",
+                success: function (result) {
+                    alert("Divorce approved");
+                    location.reload();
+                },
+                error: function (error) {
+                    //get error message from result
+                    alert(error.message)
+                }
+            });
+        });
+    </script>
+</div>
 </body>
 </html>
