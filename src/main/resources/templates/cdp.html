@@ -10,6 +10,8 @@
 
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
     <main role="main" class="inner cover" layout:fragment="main-content">
+        <p11>Fill in the following form</p11>
+        <p></p>
         <form name="divorceInfo">
             <div class="form-outline mb-4">
                 <label>Your Tax Number</label>
@@ -32,17 +34,18 @@
                 <input type="text" name="clientTaxNumber"/>
             </div>
             <div class="form-outline mb-4">
-                <label>Restore client's name</label>
-                <input type="checkbox" name="restoreName"/>
-            </div>
-            <div class="form-outline mb-4">
                 <label>Child Support</label>
-                <input type="number" name="childSupport"/>
+                <input type="text" name="childSupport"/>
             </div>
             <div class="form-outline mb-4">
                 <label>Number of children</label>
-                <input type="text" name="numberOfChildren"/>
+                <input type="number" name="numberOfChildren"/>
             </div>
+            <div class="form-outline mb-4">
+                <label>Restore client's name</label>
+                <input type="checkbox" name="restoreName"/>
+            </div>
+            <p></p>
             <input type="submit" name="submitButton">
         </form>
 

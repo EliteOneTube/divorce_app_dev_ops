@@ -10,18 +10,29 @@
 <body>
     <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
         <main role="main" class="inner cover" layout:fragment="main-content">
-            <div main-content class="inner">
+            <div main-content class="login-box">
                 <form name="Log in" action="login" method='POST'>
-                    <div>
+                    <div class="user-box">
+                        <input type="text" name="username" required="">
                         <label>Username</label>
-                        <input type="text" name="username"/>
                     </div>
-                    <div>
+                    <div class="user-box">
+                        <input type="password" name="password" required="">
                         <label>Password</label>
-                        <input type="password" name="password"/>
                     </div>
-                    <div>
-                        <input type="submit" value="Log in"/>
+                    <div >
+                        <a href="#">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+<!--                            Submit-->
+                            <div class="submit_link">
+                                <input type="submit" value="Log in"/>
+                            </div>
+
+                        </a>
+<!--                        <input type="submit" value="Log in"/>-->
                     </div>
                 </form>
             </div>
