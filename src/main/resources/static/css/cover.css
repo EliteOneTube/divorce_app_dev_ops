@@ -153,6 +153,15 @@ p4{
   color: white;
   front-family: arial;
   }
+
+p10{
+  display: inline-block;
+  width: 18%;
+  text-align: left;
+  color: white;
+  front-family: arial;
+  }
+
 /*
 p6{
   text-align: center;

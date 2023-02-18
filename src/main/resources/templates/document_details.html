@@ -1,31 +1,29 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:more_information="http://www.ultraq.net.nz/thymeleaf/more_information"
+      xmlns:document_details="http://www.ultraq.net.nz/thymeleaf/document_details"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>More information</title>
+    <title>Document's details</title>
 </head>
 <body>
 
-<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
-    <main role="main" class="inner cover" layout:fragment="main-content">
-        <!DOCTYPE html>
-        <html lang="en" xmlns:th="http://www.thymeleaf.org"
-              xmlns:more_information="http://www.ultraq.net.nz/thymeleaf/more_information"
-              xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
-        <head>
-            <meta charset="UTF-8">
-            <title>document's details</title>
-        </head>
-        <body>
-
         <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
             <main role="main" class="inner cover" layout:fragment="main-content">
-                <p>Please add the divorce's details:</p>
-<!--                TODO insert text-->
+                <h1>Document's details</h1>
+                <p></p>
+                <p></p>
+
+                <form action="/action_page.php">
+                    <label for="file">Select file:</label>
+                    <input type="file" id="file" name="file" accept="file/*">
+                    <input type="submit">
+                </form>
+                <p></p>
+
+                <p><strong>Note:</strong> Add the required documents for the divorce.</p>
             </main>
         </div>
 
-        </body>
-        </html>
+</body>
+</html>

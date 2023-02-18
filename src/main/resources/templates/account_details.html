@@ -1,10 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:account_details="http://www.ultraq.net.nz/thymeleaf/account_details"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Account details</title>
 </head>
 <body>
 
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <main role="main" class="inner cover" layout:fragment="main-content">
+        <h1>Account's details</h1>
+        <p></p>
+        <p></p>
+
+        <form action="/action_page.php">
+            <label for="file">Select file:</label>
+            <input type="file" id="file" name="file" accept="file/*">
+            <input type="submit">
+        </form>
+        <p></p>
+
+        <p><strong>Note:</strong> Add the required documents that have already filled in for the divorce.</p>
+    </main>
+</div>
+
 </body>
 </html>
+insert notarial instrument
