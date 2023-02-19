@@ -34,14 +34,13 @@ public class DivorceController {
     MemberInfoDao memberInfoDao;
 
     @PostMapping("/deleteDivorce/{id}")
-    public void deleteDivorce(@PathVariable int id, Principal principal, HttpServletResponse response) {
-        System.out.println("Deleting divorce paper with id: " + id);
+    public String deleteDivorce(@PathVariable int id, Principal principal, HttpServletResponse response) {
         DivorcePaper divorcePaper = divorceDao.findById(id);
 
         //check if divorce paper exists
         if(divorcePaper == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            return;
+            return "Divorce paper does not exist";
         }
 
         //check if the user is the lawyer
@@ -55,10 +54,11 @@ public class DivorceController {
 
         if(!exists) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return;
+            return "You are not allowed to delete this divorce paper";
         }
 
         divorceDao.deleteById(id);
+        return "Divorce paper deleted successfully";
     }
 
     @GetMapping("/getDivorce")
@@ -195,11 +195,6 @@ public class DivorceController {
 
     @PostMapping("/notarialActionId/{id}")
     public String setNotarialActionId(@PathVariable int id, @RequestBody String notarialId, Principal principal, HttpServletResponse response) {
-        if(principal == null) {
-            response.setStatus(403);
-            return "You are not logged in";
-        }
-
         //check if divorce exists
         DivorcePaper divorce = divorceDao.findById(id);
 

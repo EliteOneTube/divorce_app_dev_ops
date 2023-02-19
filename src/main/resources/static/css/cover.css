@@ -687,6 +687,37 @@ li + li {
   border-top: 1px solid rgba(255,255,255,0.2);
 }
 
+.alert {
+    padding: 20px;
+    color: white;
+    opacity: 1;
+    transition: opacity 0.6s;
+    margin-bottom: 15px;
+    width: 30%;
+    border-radius: 25px;
+    position: absolute;
+    top: 90%;
+    left: 0%;
+}
+
+.alert.Success {background-color: #14734b;}
+.alert.Warning {background-color: #ba7628;}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.closebtn:hover {
+    color: black;
+}
+
 @use postcss-preset-env {
   stage: 0;
   autoprefixer: {

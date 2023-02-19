@@ -11,7 +11,7 @@
 <main role="main" layout:fragment ="main-content" class="container">
     <h2>My divorces<small>previous and in progress</small></h2>
 
-    <form name="My divorces">
+    <form name="myDivorces">
         <ul class="responsive-table">
             <li class="table-header">
                 <div class="col col-1">Divorce ID</div>
@@ -25,12 +25,12 @@
                 <div class="col col-1" th:if="${#authorization.expression('hasRole(''NOTARY'')')}">Accept</div>
             </li>
             <li class="table-row" th:each="divorce : ${divorces}">
-                <div class="col col-1" data-label="Divorce ID">th:text="${divorce.getId()}"</div>
-                <div class="col col-1" data-label="Created at">th:text="${divorce.getCreated_at()}"</div>
-                <div class="col col-1" data-label="Child support">th:text="${divorce.getChildSupport()}"</div>
-                <div class="col col-1" data-label="Restore name">th:text="${divorce.getRestoreName()}"</div>
-                <div class="col col-1" data-label="Status">th:text="${divorce.getStatus()}"</div>
-                <div class="col col-1" data-label="Notarial Action Id">th:text="${divorce.getNotarialActionId()}"</div>
+                <div class="col col-1" data-label="Divorce ID" th:text="${divorce.getId()}"></div>
+                <div class="col col-1" data-label="Created at" th:text="${divorce.getCreated_at()}"></div>
+                <div class="col col-1" data-label="Child support" th:text="${divorce.getChildSupport()}"></div>
+                <div class="col col-1" data-label="Restore name" th:text="${divorce.getRestoreName()}"></div>
+                <div class="col col-1" data-label="Status" th:text="${divorce.getStatus()}"></div>
+                <div class="col col-1" data-label="Notarial Action Id" th:text="${divorce.getNotarialActionId()}"></div>
 
                 <div th:if="${#authorization.expression('hasAnyRole(''LAWYER'', ''SPOUSE'')')} and ${divorce.getStatus().toLowerCase().equals('pending')}">
                     <button type="submit" th:id="${divorce.getId()}"
@@ -48,85 +48,113 @@
                         Approve</button>
                 </div>
                 <div th:if="${#authorization.expression('hasAnyRole(''LAWYER'', ''SPOUSE'')')} and ${divorce.getStatus().toLowerCase().equals('approved')}">
-                    Divorce Filed
+                    Divorce Filled
                 </div>
                 <div th:if="${#authorization.expression('hasRole(''LAWYER'')')} and ${divorce.getStatus().toLowerCase().equals('approved')}">
-                    Divorce Filed
+                    Divorce Filled
                 </div>
                 <div th:if="${#authorization.expression('hasRole(''NOTARY'')')} and ${divorce.getStatus().toLowerCase().equals('approved')}">
-                    Divorce Filed
+                    Divorce Filled
                 </div>
             </li>
         </ul>
     </form>
+
+    <div class="alert" name="alert">
+
+    </div>
 </main>
 
     <script type="text/javascript">
-        $("[name='cancelDivorce']").click(() => {
+        $("[name='myDivorces']").on("submit", (e) => {
+            e.preventDefault();
+
             const urlCall = "/divorce/deleteDivorce/" + $("[name='cancelDivorce']").attr("id");
             $.ajax({
                 url: urlCall,
                 type: "POST",
                 success: function (result) {
-                    alert("Divorce canceled");
+                    createAlert(result, "Success")
                     location.reload();
                 },
-                error: function (error) {
-                    alert(error.message)
+                error: function (xhr, exception) {
+                    switch (xhr.status) {
+                        case 404:
+                            createAlert(xhr.responseText, "Warning")
+                            break;
+                        case 403:
+                            createAlert(xhr.responseText, "Warning")
+                            break;
+                        default:
+                            createAlert("Something went wrong. Try again in a bit", "Warning")
+                    }
                 }
             });
-        });
+        })
 
-        $("[name='acceptDivorce']").click(() => {
+        $("[name='myDivorces']").on("submit", (e) => {
+            e.preventDefault();
             const urlCall = "/divorce/acceptDivorce/" + $("[name='acceptDivorce']").attr("id");
             $.ajax({
                 url: urlCall,
                 type: "POST",
                 success: function (result) {
+                    createAlert(result, "Success")
                     location.reload();
                 },
                 error: function (xhr, exception) {
                     switch (xhr.status) {
-                        case 400:
-                            alert("Divorce already accepted");
-                            break;
-                        case 401:
-                            alert("You are not authorized to accept this divorce");
+                        case 404:
+                            createAlert(xhr.responseText, "Warning")
                             break;
                         case 403:
-                            alert("You are not authorized to accept this divorce");
-                            break;
-                        case 404:
-                            alert("Divorce not found");
-                            break;
-                        case 500:
-                            alert("Internal server error");
+                            createAlert(xhr.responseText, "Warning")
                             break;
                         case 409:
-                            alert("Divorce already accepted");
+                            createAlert(xhr.responseText, "Warning")
                             break;
                         default:
-                            alert("Something went wrong");
+                            createAlert("Something went wrong. Try again in a bit", "Warning")
                     }
                 }
             });
-        });
+        })
 
-        $("[name='approveDivorce']").click(() => {
+        $("[name='myDivorces']").on("submit", (e) =>{
+            e.preventDefault();
             const urlCall = "/divorce/approveDivorce/" + $("[name='approveDivorce']").attr("id");
             $.ajax({
                 url: urlCall,
                 type: "POST",
                 success: function (result) {
-                    alert("Divorce approved");
+                    createAlert(result, "Success")
                     location.reload();
                 },
-                error: function (error) {
-                    //get error message from result
-                    alert(error.message)
+                error: function (xhr, exception) {
+                    switch (xhr.status) {
+                        case 404:
+                            createAlert(xhr.responseText, "Warning")
+                            break;
+                        case 403:
+                            createAlert(xhr.responseText, "Warning")
+                            break;
+                        default:
+                            createAlert("Something went wrong. Try again in a bit", "Warning")
+                    }
                 }
             });
-        });
+        })
+
+        function createAlert(message, type){
+            const alert = $("[name='alert']");
+            alert.addClass("alert " + type);
+            alert.text(message);
+
+            setTimeout(() => {
+                alert.removeClass("alert " + type);
+                alert.text("");
+            }, 3000);
+        }
     </script>
 </div>
 </body>

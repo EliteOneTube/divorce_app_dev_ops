@@ -28,13 +28,18 @@
             </div>
         </form>
 
+        <div class="alert" name="alert">
+
+        </div>
+
         <script>
-            $("[name='submitButton']").click(() => {
+            $("[name='notarialActionId']").on("submit", (e) => {
+                e.preventDefault();
+
                 const notarialActionId = $("input[name=notarialActionId]").val();
                 const documentId = $("input[name=documentId]").val();
 
                 if(notarialActionId === "" || documentId === "") {
-                    alert("Please fill in all the fields!");
                     return;
                 }
 
@@ -44,10 +49,36 @@
                     data: JSON.stringify(notarialActionId),
                     contentType: "application/json",
                     success: function (data) {
-                        console.log(data);
+                        createAlert(data, "Success");
+                    },
+                    error: function (xhr, exception) {
+                        switch (xhr.status) {
+                            case 403:
+                                createAlert(xhr.responseText, "Warning");
+                                break;
+                            case 404:
+                                createAlert(xhr.responseText, "Warning");
+                                break;
+                            case 409:
+                                createAlert(xhr.responseText, "Warning");
+                                break;
+                            default:
+                                createAlert("Unknown error", "Warning");
+                        }
                     }
                 });
-            });
+            })
+
+            function createAlert(message, type) {
+                const alert = $("[name='alert']");
+                alert.addClass("alert " + type);
+                alert.text(message);
+
+                setTimeout(() => {
+                    alert.removeClass("alert " + type);
+                    alert.text("");
+                }, 3000);
+            }
         </script>
     </main>
 </div>

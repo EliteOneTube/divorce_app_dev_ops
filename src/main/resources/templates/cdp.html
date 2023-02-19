@@ -61,8 +61,15 @@
                 </div>
             </form>
         </div>
+
+        <div class="alert" name="alert">
+
+        </div>
+
+
         <script type="text/javascript">
-            $("[name='submitButton']").click(() => {
+            $("[name='divorceInfo']").on("submit", (e) => {
+                e.preventDefault();
 
                 const taxNumber = $("[name='taxNumber']").val();
                 const spouseTaxNumber = $("[name='spouseTaxNumber']").val();
@@ -74,7 +81,6 @@
                 const numberOfChildren = $("[name='numberOfChildren']").val();
 
                 if(taxNumber === "" || spouseTaxNumber === "" || lawyerTaxNumber === "" || notaryTaxNumber === "" || clientTaxNumber === "" || childSupport === "" || numberOfChildren === ""){
-                    alert("Please fill all the fields");
                     return;
                 }
 
@@ -96,13 +102,24 @@
                     data: JSON.stringify(data),
                     contentType: "application/json",
                     success: function (data) {
-                        alert("Divorce successfully created");
+                        createAlert("Divorce successfully created", "Success")
                     },
                     error: function (xhr, exception) {
-                        alert(xhr.status);
+                        createAlert("Error creating divorce" + xhr.status, "Warning")
                     }
                 });
-            });
+            })
+
+            function createAlert(message, type){
+                const alert = $("[name='alert']");
+                alert.addClass("alert " + type);
+                alert.text(message);
+
+                setTimeout(() => {
+                    alert.removeClass("alert " + type);
+                    alert.text("");
+                }, 3000);
+            }
         </script>
     </main>
 </div>
