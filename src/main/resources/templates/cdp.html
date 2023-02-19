@@ -98,8 +98,8 @@
                     success: function (data) {
                         alert("Divorce successfully created");
                     },
-                    error: function (data) {
-                        alert("Error creating divorce");
+                    error: function (xhr, exception) {
+                        alert(xhr.status);
                     }
                 });
             });

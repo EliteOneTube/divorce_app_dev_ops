@@ -10,18 +10,45 @@
 
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
     <main role="main" class="register-box" layout:fragment="main-content">
-        <h1>Account's details</h1>
+        <h1>Notarial's Action id</h1>
         <p></p>
         <p></p>
 
-        <form action="/action_page.php">
-            <label for="file"></label>
-            <input type="file" id="file" name="file" accept="file/*">
-            <input type="submit">
+        <form name="notarialActionId">
+            <div class="user-box">
+                <input type="text" name="documentId" required=""/>
+                <label>Document id</label>
+            </div>
+            <div class="user-box">
+                <input type="text" name="notarialActionId" required=""/>
+                <label>Notarial's Action id</label>
+            </div>
+            <div>
+                <input type="submit" name="submitButton"/>
+            </div>
         </form>
-        <p></p>
 
-        <p><strong>Note:</strong> Add the required documents that have already filled in for the divorce.</p>
+        <script>
+            $("[name='submitButton']").click(() => {
+                const notarialActionId = $("input[name=notarialActionId]").val();
+                const documentId = $("input[name=documentId]").val();
+
+                if(notarialActionId === "" || documentId === "") {
+                    alert("Please fill in all the fields!");
+                    return;
+                }
+
+                $.ajax({
+                    url: "/divorce/notarialActionId/" + documentId,
+                    type: "POST",
+                    data: JSON.stringify(notarialActionId),
+                    contentType: "application/json",
+                    success: function (data) {
+                        console.log(data);
+                    }
+                });
+            });
+        </script>
     </main>
 </div>
 

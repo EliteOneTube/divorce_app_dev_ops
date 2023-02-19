@@ -192,4 +192,46 @@ public class DivorceController {
         divorceDao.save(divorce);
         return "Divorce accepted successfully";
     }
+
+    @PostMapping("/notarialActionId/{id}")
+    public String setNotarialActionId(@PathVariable int id, @RequestBody String notarialId, Principal principal, HttpServletResponse response) {
+        if(principal == null) {
+            response.setStatus(403);
+            return "You are not logged in";
+        }
+
+        //check if divorce exists
+        DivorcePaper divorce = divorceDao.findById(id);
+
+        if(divorce == null) {
+            response.setStatus(404);
+            return "Divorce paper does not exist";
+        }
+
+        if(divorce.getNotarialActionId() != null) {
+            response.setStatus(409);
+            return "Notarial action id has already been set";
+        }
+
+        //check if user is included in divorce
+        boolean exists = false;
+        for(MemberInfo member : divorce.getMembers()) {
+            if(member.getUsername().equals(principal.getName())) {
+                exists = true;
+                break;
+            }
+        }
+
+        if(!exists) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return "User is not included in divorce";
+        }
+
+        //set notarial action id
+        divorce.setNotarialActionId(notarialId);
+
+        divorceDao.save(divorce);
+
+        return "success";
+    }
 }
