@@ -6,62 +6,76 @@
 <head>
     <meta charset="UTF-8">
     <title>Registration</title>
+    <link rel="stylesheet" type="text/css" href="slide navbar style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
     <main role="main" class="inner cover" layout:fragment="main-content">
-        <form th:action="@{/register}" th:object="${user}" method="post">
-            <div class="form-outline mb-4">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" th:field="*{username}" id="username" placeholder="username" class="form-control">
-                <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
-            </div>
-            <div class="form-outline mb-4">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" th:field="*{password}" id="password" placeholder="password" class="form-control">
-                <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
-            </div>
-            <div class="form-outline mb-4">
-                <label for="email" class="form-label">Email</label>
-                <input type="text" th:field="*{email}" id="email" placeholder="email" class="form-control">
-                <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
-            </div>
-            <div class="form-outline mb-4">
-                <label for="fullName" class="form-label">Full Name</label>
-                <input type="text" th:field="*{fullName}" id="fullName" placeholder="fullname" class="form-control">
-                <span th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></span>
-            </div>
+        <div main-content class="register-box">
+            <form th:action="@{/register}" th:object="${user}" method="post">
+                <div class="user-box">
+                    <input type="text" th:field="*{username}" id="username" required="" class="form-control">
+                    <label for="username" class="form-label">Username</label>
+                    <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+                </div>
+                <div class="user-box">
+                    <input type="password" th:field="*{password}" id="password" required="" class="form-control">
+                    <label for="password" class="form-label">Password</label>
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                </div>
+                <div class="user-box">
+                    <input type="text" th:field="*{email}" id="email" required="" class="form-control">
+                    <label for="email" class="form-label">Email</label>
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                </div>
+                <div class="user-box">
+                    <input type="text" th:field="*{fullName}" id="fullName" required="" class="form-control">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <span th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}"></span>
+                </div>
 
-            <div class="form-outline mb-4">
-                <label for="taxNumber" class="form-label">Tax Number</label>
-                <input type="text" th:field="*{taxNumber}" id="taxNumber" placeholder="taxNumber" class="form-control">
-                <span th:if="${#fields.hasErrors('taxNumber')}" th:errors="*{taxNumber}"></span>
+                <div class="user-box">
+                    <input type="text" th:field="*{taxNumber}" id="taxNumber" required="" class="form-control">
+                    <label for="taxNumber" class="form-label">Tax Number</label>
+                    <span th:if="${#fields.hasErrors('taxNumber')}" th:errors="*{taxNumber}"></span>
+                </div>
+
+                <div class="user-box">
+                    <select th:field="*{role}" id="role" required="" class="form-control">
+                        <option value="SPOUSE">Spouse</option>
+                        <option value="LAWYER">Lawyer</option>
+                        <option value="NOTARY">Notary</option>
+                    </select>
+                    <label for="role" class="form-label">Role</label>
+                    <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
+                </div>
+
+                <div>
+                    <a href="#">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                        <div>
+                            <input type="submit" value="register"/>
+                        </div>
+                    </a>
+                </div>
+
+            </form>
+            <div th:if="${errorMsg}">
+                <div th:replace='~{layout/notification :: notification(${errorMsg})}' ></div>
+
+                <script>
+                        setTimeout( () => {
+                           document.getElementById("notification").innerHTML = "";
+                        }, 5000);
+                </script>
             </div>
-
-            <div class="form-outline mb-4">
-                <label for="role" class="form-label">Role</label>
-                <select th:field="*{role}" id="role" class="form-control">
-                    <option value="SPOUSE">Spouse</option>
-                    <option value="LAWYER">Lawyer</option>
-                    <option value="NOTARY">Notary</option>
-                </select>
-                <span th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></span>
-            </div>
-
-            <input type="submit"
-                   name="submit"/>
-
-        </form>
-
-        <div th:if="${errorMsg}">
-            <div th:replace='~{layout/notification :: notification(${errorMsg})}' ></div>
-
-            <script>
-                setTimeout( () => {
-                    document.getElementById("notification").innerHTML = "";
-                }, 5000);
-            </script>
         </div>
+
     </main>
 </div>
 </body>

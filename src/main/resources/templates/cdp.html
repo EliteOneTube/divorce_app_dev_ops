@@ -10,45 +10,57 @@
 
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
     <main role="main" class="inner cover" layout:fragment="main-content">
-        <p11>Fill in the following form</p11>
-        <p></p>
-        <form name="divorceInfo">
-            <div class="form-outline mb-4">
-                <label>Your Tax Number</label>
-                <input type="text" name="taxNumber"/>
-            </div>
-            <div class="form-outline mb-4">
-                <label>Spouse's Tax Number</label>
-                <input type="text" name="spouseTaxNumber"/>
-            </div>
-            <div class="form-outline mb-4">
-                <label>Lawyer's Tax Number</label>
-                <input type="text" name="lawyerTaxNumber"/>
-            </div>
-            <div class="form-outline mb-4">
-                <label>Notary's Tax Number</label>
-                <input type="text" name="notaryTaxNumber"/>
-            </div>
-            <div class="form-outline mb-4">
-                <label>Your client's TaxNumber</label>
-                <input type="text" name="clientTaxNumber"/>
-            </div>
-            <div class="form-outline mb-4">
-                <label>Child Support</label>
-                <input type="text" name="childSupport"/>
-            </div>
-            <div class="form-outline mb-4">
-                <label>Number of children</label>
-                <input type="number" name="numberOfChildren"/>
-            </div>
-            <div class="form-outline mb-4">
-                <label>Restore client's name</label>
-                <input type="checkbox" name="restoreName"/>
-            </div>
+        <div main-content class="register-box">
+            <p11>Fill in the following form</p11>
             <p></p>
-            <input type="submit" name="submitButton">
-        </form>
+            <form name="divorceInfo">
+                <div class="user-box">
+                    <input type="text" name="taxNumber" required=""/>
+                    <label>Your Tax Number</label>
+                </div>
+                <div class="user-box">
+                    <input type="text" name="spouseTaxNumber" required=""/>
+                    <label>Spouse's Tax Number</label>
+                </div>
+                <div class="user-box">
+                    <input type="text" name="lawyerTaxNumber" required=""/>
+                    <label>Lawyer's Tax Number</label>
+                </div>
+                <div class="user-box">
+                    <input type="text" name="notaryTaxNumber" required=""/>
+                    <label>Notary's Tax Number</label>
+                </div>
+                <div class="user-box">
+                    <input type="text" name="clientTaxNumber" required=""/>
+                    <label>Your client's TaxNumber</label>
+                </div>
+                <div class="user-box">
+                    <input type="text" name="childSupport" required=""/>
+                    <label>Child Support</label>
+                </div>
+                <div class="user-box">
+                    <input type="number" name="numberOfChildren" required=""/>
+                    <label>Number of children</label>
+                </div>
+                <div>
+                    <input type="checkbox" name="restoreName" required=""/>
+                    <label>Restore client's name</label>
+                </div>
+                <p></p>
+                <div>
+                    <a href="#">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
 
+                        <div>
+                            <input type="submit" name="submitButton"/>
+                        </div>
+                    </a>
+                </div>
+            </form>
+        </div>
         <script type="text/javascript">
             $("[name='submitButton']").click(() => {
 

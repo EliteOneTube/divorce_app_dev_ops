@@ -6,53 +6,58 @@
     <title>My divorces</title>
 </head>
 <body>
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
 
-<div layout:fragment ="main-content">
-    <h1>My divorces</h1>
+<main role="main" layout:fragment ="main-content" class="container">
+    <h2>My divorces<small>previous and in progress</small></h2>
 
     <form name="My divorces">
-        <table class="center" border="1" style="width:68%">
-            <th>Divorce ID</th>
-            <th>Created at</th>
-            <th>Child support</th>
-            <th>Restore name</th>
-            <th>Status</th>
-            <th th:if="${#authorization.expression('hasAnyRole(''LAWYER'', ''SPOUSE'')')}">Approve</th>
-            <th th:if="${#authorization.expression('hasRole(''LAWYER'')')}">Cancel</th>
-            <th th:if="${#authorization.expression('hasRole(''NOTARY'')')}">Accept</th>
-            <tr th:each="divorce : ${divorces}">
-                <td th:text="${divorce.getId()}"></td>
-                <td th:text="${divorce.getCreated_at()}"></td>
-                <td th:text="${divorce.getChildSupport()}"/>
-                <td th:text="${divorce.getRestoreName()}"/>
-                <td th:text="${divorce.getStatus()}"/>
-                <td th:if="${#authorization.expression('hasAnyRole(''LAWYER'', ''SPOUSE'')')} and ${divorce.getStatus().toLowerCase().equals('pending')}">
-                    <button type="submit" th:id="${divorce.getId()}"
-                            name="acceptDivorce"><i class="remove user icon"></i>
-                        Accept</button>
-                </td>
-                <td th:if="${#authorization.expression('hasRole(''LAWYER'')')} and ${divorce.getStatus().toLowerCase().equals('pending')}">
-                    <button type="submit" th:id="${divorce.getId()}"
-                            name="cancelDivorce"><i class="remove user icon"></i>
-                        Cancel</button>
-                </td>
-                <td th:if="${#authorization.expression('hasRole(''NOTARY'')')} and ${divorce.getStatus().toLowerCase().equals('pending')}">
-                    <button type="submit" th:id="${divorce.getId()}"
-                            name="approveDivorce"><i class="remove user icon"></i>
-                        Approve</button>
-                </td>
-                <td th:if="${#authorization.expression('hasAnyRole(''LAWYER'', ''SPOUSE'')')} and ${divorce.getStatus().toLowerCase().equals('approved')}">
-                    Divorce Filed
-                </td>
-                <td th:if="${#authorization.expression('hasRole(''LAWYER'')')} and ${divorce.getStatus().toLowerCase().equals('approved')}">
-                    Divorce Filed
-                </td>
-                <td th:if="${#authorization.expression('hasRole(''NOTARY'')')} and ${divorce.getStatus().toLowerCase().equals('approved')}">
-                    Divorce Filed
-                </td>
-            </tr>
-        </table>
+        <ul class="responsive-table">
+            <li class="table-header">
+                <div class="col col-1">Divorce ID</div>
+                <div class="col col-1">Created at</div>
+                <div class="col col-1">Child support</div>
+                <div class="col col-1">Restore name</div>
+                <div class="col col-1">Status</div>
+                <div class="col col-1" th:if="${#authorization.expression('hasAnyRole(''LAWYER'', ''SPOUSE'')')}">Approve</div>
+                <div class="col col-1" th:if="${#authorization.expression('hasRole(''LAWYER'')')}">Cancel</div>
+                <div class="col col-1" th:if="${#authorization.expression('hasRole(''NOTARY'')')}">Accept</div>
+            </li>
+            <li class="table-row" th:each="divorce : ${divorces}">
+                <div class="col col-1" data-label="Divorce ID">th:text="${divorce.getId()}"</div>
+                <div class="col col-1" data-label="Created at">th:text="${divorce.getCreated_at()}"</div>
+                <div class="col col-1" data-label="Child support">th:text="${divorce.getChildSupport()}"</div>
+                <div class="col col-1" data-label="Restore name">th:text="${divorce.getRestoreName()}"</div>
+                <div class="col col-1" data-label="Status">th:text="${divorce.getStatus()}"</div>
+
+                        <div th:if="${#authorization.expression('hasAnyRole(''LAWYER'', ''SPOUSE'')')} and ${divorce.getStatus().toLowerCase().equals('pending')}">
+                            <button type="submit" th:id="${divorce.getId()}"
+                                    name="acceptDivorce"><i class="remove user icon"></i>
+                                Accept</button>
+                        </div>
+                        <div th:if="${#authorization.expression('hasRole(''LAWYER'')')} and ${divorce.getStatus().toLowerCase().equals('pending')}">
+                            <button type="submit" th:id="${divorce.getId()}"
+                                    name="cancelDivorce"><i class="remove user icon"></i>
+                                Cancel</button>
+                        </div>
+                        <div th:if="${#authorization.expression('hasRole(''NOTARY'')')} and ${divorce.getStatus().toLowerCase().equals('pending')}">
+                            <button type="submit" th:id="${divorce.getId()}"
+                                    name="approveDivorce"><i class="remove user icon"></i>
+                                Approve</button>
+                        </div>
+                        <div th:if="${#authorization.expression('hasAnyRole(''LAWYER'', ''SPOUSE'')')} and ${divorce.getStatus().toLowerCase().equals('approved')}">
+                            Divorce Filed
+                        </div>
+                        <div th:if="${#authorization.expression('hasRole(''LAWYER'')')} and ${divorce.getStatus().toLowerCase().equals('approved')}">
+                            Divorce Filed
+                        </div>
+                        <div th:if="${#authorization.expression('hasRole(''NOTARY'')')} and ${divorce.getStatus().toLowerCase().equals('approved')}">
+                            Divorce Filed
+                        </div>
+            </li>
+        </ul>
     </form>
+</main>
 
     <script type="text/javascript">
         $("[name='cancelDivorce']").click(() => {
