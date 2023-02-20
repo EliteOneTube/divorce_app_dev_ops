@@ -16,4 +16,6 @@ public interface DivorceDao {
     public List<DivorcePaper> findByMembers(DivorceInfo divorceInfo);
 
     public List<DivorcePaper> findByUsername(String username);
+
+    public Integer countDivorcePapers();
 }

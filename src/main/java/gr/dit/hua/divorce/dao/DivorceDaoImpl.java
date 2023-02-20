@@ -83,5 +83,14 @@ public class DivorceDaoImpl implements DivorceDao {
         return memberInfo.getDivorcePapers();
     }
 
+    @Override
+    @Transactional
+    public Integer countDivorcePapers() {
+        Session session = entityManager.unwrap(Session.class);
+        Query query = session.createQuery("select count(*) from DivorcePaper");
+        int count = ((Number) query.getSingleResult()).intValue();
+        return count;
+    }
+
 }
 

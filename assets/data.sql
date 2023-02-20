@@ -77,12 +77,12 @@ INSERT INTO member_info (taxNumber, email, fullName, username) VALUES
 ('656789014', 'example@gmail.com', 'John Doe', 'notary4'),
 ('656789015', 'example@gmail.com', 'John Doe', 'notary5');
 
-INSERT INTO divorce_paper(id, childSupport, created_at, notarialActionId, numberOfChildren,restoreName, status) VALUES
-(1, 100, '2003/12/13 10:13:18', '123456789', 1, true, 'PENDING'),
-(2, 200, '2003/12/13 10:13:18', '123456789', 2, true, 'PENDING'),
-(3, 300, '2003/12/13 10:13:18', '123456789', 3, true, 'PENDING'),
-(4, 400, '2003/12/13 10:13:18', '123456789', 4, true, 'PENDING'),
-(5, 500, '2003/12/13 10:13:18', '123456789', 5, true, 'PENDING');
+INSERT INTO divorce_paper(childSupport, created_at, notarialActionId, numberOfChildren,restoreName, status) VALUES
+(100, '2003/12/13 10:13:18', '123456789', 1, true, 'PENDING'),
+(200, '2003/12/13 10:13:18', '123456789', 2, true, 'PENDING'),
+(300, '2003/12/13 10:13:18', '123456789', 3, true, 'PENDING'),
+(400, '2003/12/13 10:13:18', '123456789', 4, true, 'PENDING'),
+(500, '2003/12/13 10:13:18', '123456789', 5, true, 'PENDING');
 
 INSERT INTO divorce_paper_member_info(member_info_taxNumber, divorce_paper_id) VALUES
 ('456789011', 1),
@@ -111,9 +111,8 @@ INSERT INTO divorce_paper_member_info(member_info_taxNumber, divorce_paper_id) V
 ('556789010', 5),
 ('656789015', 5);
 
-INSERT INTO acceptance(id, tax_number, acceptance_id) VALUES
-(1,'456789011', 1),
-(2,'456789012', 1),
-(3,'556789011', 1),
-(4,'556789012', 1),
-(5,'656789011', 1);
+INSERT INTO acceptance(tax_number, acceptance_id) VALUES
+('456789012', 1),
+('556789011', 1),
+('556789012', 1),
+('656789011', 1);

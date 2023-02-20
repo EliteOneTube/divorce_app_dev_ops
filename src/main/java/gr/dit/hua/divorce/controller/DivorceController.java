@@ -33,6 +33,9 @@ public class DivorceController {
     @Autowired
     MemberInfoDao memberInfoDao;
 
+    @Autowired
+    JdbcUserDetailsManager jdbcUserDetailsManager;
+
     @PostMapping("/deleteDivorce/{id}")
     public String deleteDivorce(@PathVariable int id, Principal principal, HttpServletResponse response) {
         DivorcePaper divorcePaper = divorceDao.findById(id);
@@ -58,6 +61,7 @@ public class DivorceController {
         }
 
         divorceDao.deleteById(id);
+        response.setStatus(HttpServletResponse.SC_OK);
         return "Divorce paper deleted successfully";
     }
 
@@ -75,6 +79,7 @@ public class DivorceController {
     @PostMapping("/saveDivorce")
     public String saveDivorce(@Valid @RequestBody DivorceInfo divorceInfo, HttpServletResponse response, Principal principal) {
         DivorcePaper divorce = new DivorcePaper();
+
         divorce.setChildSupport(divorceInfo.getChildSupport());
         divorce.setRestoreName(divorceInfo.getRestoreName());
         divorce.setNumberOfChildren(divorceInfo.getNumberOfChildren());
@@ -116,6 +121,7 @@ public class DivorceController {
 
         divorceDao.save(divorce);
 
+        response.setStatus(HttpServletResponse.SC_OK);
         return "Divorce saved successfully";
     }
     //TODO: check if user is the same as the one we are searching
@@ -124,9 +130,9 @@ public class DivorceController {
         return divorceDao.findByTaxNumber(taxNumber);
     }
 
-    @PostMapping("/approveDivorce")
-    public String approveDivorce(@RequestBody NotarialInfo notarialInfo, HttpServletResponse response) {
-        DivorcePaper divorce = divorceDao.findById(notarialInfo.getId());
+    @PostMapping("/approveDivorce/{id}")
+    public String approveDivorce(@PathVariable int id, HttpServletResponse response) {
+        DivorcePaper divorce = divorceDao.findById(id);
 
         if(divorce == null) {
             response.setStatus(404);
@@ -138,9 +144,16 @@ public class DivorceController {
             return "Not all users have accepted the divorce";
         }
 
-        divorce.setStatus("approved");
-        divorce.setNotarialActionId(notarialInfo.getNotarialActionId());
+        if(divorce.getNotarialActionId() == null) {
+            response.setStatus(403);
+            return "You haven't included the notarial action id";
+        }
+
+
+        divorce.setStatus("Approved");
         divorceDao.save(divorce);
+
+        response.setStatus(HttpServletResponse.SC_OK);
         return "Divorce approved successfully";
     }
 
@@ -151,11 +164,6 @@ public class DivorceController {
         if(divorce == null) {
             response.setStatus(404);
             return "Divorce paper does not exist";
-        }
-
-        if(divorce.getNotarialActionId() == null) {
-            response.setStatus(403);
-            return "You haven't included the notarial action id";
         }
 
         MemberInfo memberInfo = memberInfoDao.findByUsername(principal.getName());
@@ -190,6 +198,8 @@ public class DivorceController {
         divorce.setAcceptance(acceptances);
 
         divorceDao.save(divorce);
+
+        response.setStatus(HttpServletResponse.SC_OK);
         return "Divorce accepted successfully";
     }
 
@@ -227,6 +237,7 @@ public class DivorceController {
 
         divorceDao.save(divorce);
 
-        return "success";
+        response.setStatus(HttpServletResponse.SC_OK);
+        return "Changed notarial action id successfully";
     }
 }
