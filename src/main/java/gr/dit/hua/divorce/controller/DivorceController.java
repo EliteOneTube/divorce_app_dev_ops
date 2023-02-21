@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.hibernate.validator.internal.util.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -177,7 +178,7 @@ public class DivorceController {
             }
         }
 
-        if(!exists) {
+        if(!exists && !isAdmin(principal)) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             return "User is not included in divorce";
         }
@@ -227,7 +228,7 @@ public class DivorceController {
             }
         }
 
-        if(!exists) {
+        if(!exists && !isAdmin(principal)) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             return "User is not included in divorce";
         }
@@ -239,5 +240,12 @@ public class DivorceController {
 
         response.setStatus(HttpServletResponse.SC_OK);
         return "Changed notarial action id successfully";
+    }
+
+    private boolean isAdmin(Principal principal) {
+        UserDetails userDetails = jdbcUserDetailsManager.loadUserByUsername(principal.getName());
+
+        return userDetails.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
     }
 }

@@ -3,6 +3,9 @@ package gr.dit.hua.divorce.controller;
 import gr.dit.hua.divorce.dao.DivorceDao;
 import gr.dit.hua.divorce.entity.DivorcePaper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +18,9 @@ import java.util.List;
 @Controller
 @RequestMapping("")
 public class IndexController{
+
+    @Autowired
+    JdbcUserDetailsManager jdbcUserDetailsManager;
 
     @Autowired
     private DivorceDao divorceDao;
@@ -52,7 +58,16 @@ public class IndexController{
 
     @GetMapping("/my_divorces")
     public String my_divorces(Model model, Principal principal) {
-        List<DivorcePaper> divorces = divorceDao.findByUsername(principal.getName());
+        //load user
+        UserDetails user = jdbcUserDetailsManager.loadUserByUsername(principal.getName());
+
+        List<DivorcePaper> divorces;
+        if(user.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))){
+            divorces = divorceDao.findAll();
+        } else {
+            divorces = divorceDao.findByUsername(principal.getName());
+        }
+
         model.addAttribute("divorces", divorces);
         return "my_divorces";
     }
