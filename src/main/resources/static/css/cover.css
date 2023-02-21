@@ -216,7 +216,7 @@ p8{
     padding: 20px;
     width: 15px;
     height: 10px;
-    }
+}
 
 
 
@@ -224,13 +224,16 @@ a:hover{
 color: green;
 }
 
-.Lucida_Handwriting {font-family:Lucida Handwriting;
+.Lucida_Handwriting {
+    font-family:Lucida Handwriting;
     text-decoration:none;
+    flex: 1;
 }
 
 
 .cover-container {
     max-width: 42em;
+    width: auto;
 }
 
 
@@ -731,9 +734,14 @@ my_divorces list
     margin: 25px 0;
     font-size: 0.9em;
     font-family: sans-serif;
-    min-width: 400px;
+    min-width: auto;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     border: 2px solid #000000;
+    height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: block;
+    min-height: auto;
 }
 
 .styled-table thead tr {

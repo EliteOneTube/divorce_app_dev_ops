@@ -8,12 +8,12 @@
 <body>
 <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
 
-<main role="main" layout:fragment ="main-content" class="container">
+<main role="main" layout:fragment ="main-content" class="container" style="width:auto">
     <h2>My divorces</h2>
     <small class="smaller">previous and in progress</small>
 
     <form name="myDivorces">
-        <table class="styled-table center" style="width:68%">
+        <table class="styled-table center">
             <th>Divorce ID</th>
             <th>Created at</th>
             <th>Child support</th>
@@ -66,7 +66,7 @@
         $("[name='cancelDivorce']").on("click", (e) => {
             e.preventDefault();
 
-            const urlCall = "/divorce/deleteDivorce/" + $("[name='cancelDivorce']").attr("id");
+            const urlCall = "/divorce/deleteDivorce/" + $(e.target).attr("id");
             $.ajax({
                 url: urlCall,
                 type: "POST",
@@ -90,7 +90,7 @@
 
         $("[name='acceptDivorce']").on("click", (e) => {
             e.preventDefault();
-            const urlCall = "/divorce/acceptDivorce/" + $("[name='acceptDivorce']").attr("id");
+            const urlCall = "/divorce/acceptDivorce/" + $(e.target).attr("id");
             $.ajax({
                 url: urlCall,
                 type: "POST",
@@ -117,7 +117,7 @@
 
         $("[name='approveDivorce']").on("click", (e) =>{
             e.preventDefault();
-            const urlCall = "/divorce/approveDivorce/" + $("[name='approveDivorce']").attr("id");
+            const urlCall = "/divorce/approveDivorce/" + $(e.target).attr("id");
             $.ajax({
                 url: urlCall,
                 type: "POST",

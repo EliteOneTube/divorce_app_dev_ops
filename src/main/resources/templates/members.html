@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>My divorces</title>
+</head>
+<body>
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+
+    <main role="main" layout:fragment ="main-content" class="container" style="width:auto">
+        <h2>Members</h2>
+
+        <form name="myDivorces">
+            <table class="styled-table center">
+                <th>Username</th>
+                <th>Email</th>
+                <th>Full Name</th>
+                <th>Tax Number</th>
+                <th>Number of Divorces</th>
+                <th>Delete</th>
+                <tr th:each="member : ${members}">
+                    <td th:text="${member.getUsername()}"></td>
+                    <td th:text="${member.getEmail()}"></td>
+                    <td th:text="${member.getFullName()}"/>
+                    <td th:text="${member.getTaxNumber()}"/>
+                    <td th:text="${member.getDivorcePapers().size()}"/>
+                    <td>
+                        <button type="submit" th:id="${member.getTaxNumber()}"
+                                name="deleteMember"><i class="remove user icon"></i>
+                            Delete</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <div class="alert" name="alert">
+
+        </div>
+
+        <script type="text/javascript">
+            $("[name='deleteMember']").on("click", (e) => {
+                e.preventDefault();
+
+                const urlCall = "/member/deleteMember/" + $(e.target).attr("id");
+                $.ajax({
+                    url: urlCall,
+                    type: "POST",
+                    success: function (result) {
+                        createAlert("Deleted User", "Success")
+                    },
+                    error: function (xhr, exception) {
+                        switch (xhr.status) {
+                            case 404:
+                                createAlert("User with that tax number does not exist", "Warning")
+                                break;
+                            default:
+                                createAlert("Something went wrong. Try again in a bit", "Warning")
+                        }
+                    }
+                });
+            })
+
+            function createAlert(message, type){
+                const alert = $("[name='alert']");
+                alert.addClass("alert " + type);
+                alert.text(message);
+
+                setTimeout(() => {
+                    alert.removeClass("alert " + type);
+                    alert.text("");
+                    location.reload();
+                }, 3000);
+            }
+        </script>
+    </main>
+</div>
+</body>
+</html>

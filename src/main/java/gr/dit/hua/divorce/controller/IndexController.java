@@ -1,6 +1,7 @@
 package gr.dit.hua.divorce.controller;
 
 import gr.dit.hua.divorce.dao.DivorceDao;
+import gr.dit.hua.divorce.dao.MemberInfoDao;
 import gr.dit.hua.divorce.entity.DivorcePaper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,8 +26,8 @@ public class IndexController{
     @Autowired
     private DivorceDao divorceDao;
 
-    @GetMapping("/admin/index")
-    public String admin() { return "admin/index";}
+    @Autowired
+    private MemberInfoDao memberInfoDao;
 
 
     @GetMapping("/more_information")
@@ -43,15 +44,6 @@ public class IndexController{
 
     @GetMapping("/member_names")
     public String member_names() { return "member_names";}
-
-    @GetMapping("/document_details")
-    public String document_details() { return "document_details";}
-
-    @GetMapping("/confirmation_of_divorce")
-    public String confirmation_of_divorce() { return "confirmation_of_divorce";}
-
-    @GetMapping("/divorce_cancellation")
-    public String divorce_cancellation() { return "divorce_cancellation";}
 
     @GetMapping("/account_details")
     public String account_details() { return "account_details";}
@@ -70,5 +62,11 @@ public class IndexController{
 
         model.addAttribute("divorces", divorces);
         return "my_divorces";
+    }
+
+    @GetMapping("/members")
+    public String members(Model model) {
+        model.addAttribute("members", memberInfoDao.findAll());
+        return "members";
     }
 }

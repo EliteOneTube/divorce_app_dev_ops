@@ -59,7 +59,7 @@ public class DivorceController {
             }
         }
 
-        if(!exists) {
+        if(!exists && !isAdmin(principal)) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             return "You are not allowed to delete this divorce paper";
         }
