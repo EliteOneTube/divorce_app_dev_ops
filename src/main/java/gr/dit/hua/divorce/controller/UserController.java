@@ -37,7 +37,6 @@ public class UserController {
         return new ModelAndView("register", "user", new UserDetails());
     }
 
-    //TODO return error messages to the user in case of error
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView processRegister(@ModelAttribute("user") UserDetails userRegistrationObject, HttpServletResponse response) {
         ModelAndView modelAndView = new ModelAndView("register", "user", userRegistrationObject);

@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-//TODO: dont let approved divorces to be edited
-
 @RestController
 @RequestMapping("/divorce")
 public class DivorceController {
@@ -45,6 +43,11 @@ public class DivorceController {
         if(divorcePaper == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return "Divorce paper does not exist";
+        }
+
+        if(divorcePaper.getStatus().toLowerCase().equals("approved")) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return "You are not allowed to delete this divorce paper. It has already been approved";
         }
 
         //check if the user is the lawyer
@@ -76,7 +79,6 @@ public class DivorceController {
         return divorceDao.findAll();
     }
 
-    //TODO: check roles
     @PostMapping("/saveDivorce")
     public String saveDivorce(@Valid @RequestBody DivorceInfo divorceInfo, HttpServletResponse response, Principal principal) {
         DivorcePaper divorce = new DivorcePaper();
@@ -100,6 +102,31 @@ public class DivorceController {
 
         divorce.setMembers(members);
 
+        if(!hasRole(memberInfoDao.findByTaxNumber(divorceInfo.getNotary()).getUsername(), "ROLE_NOTARY")) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return "Notary does not have the notary role";
+        }
+
+        if(!hasRole(memberInfoDao.findByTaxNumber(divorceInfo.getLawyer1()).getUsername(), "ROLE_LAWYER")) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return "Lawyer 1 does not have the lawyer role";
+        }
+
+        if(!hasRole(memberInfoDao.findByTaxNumber(divorceInfo.getLawyer2()).getUsername(), "ROLE_LAWYER")) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return "Lawyer 2 does not have the lawyer role";
+        }
+
+        if(!hasRole(memberInfoDao.findByTaxNumber(divorceInfo.getSpouse1()).getUsername(), "ROLE_SPOUSE")) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return "Spouse 1 does not have the spouse role";
+        }
+
+        if(!hasRole(memberInfoDao.findByTaxNumber(divorceInfo.getSpouse2()).getUsername(), "ROLE_SPOUSE")) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            return "Spouse 2 does not have the spouse role";
+        }
+
         List<DivorcePaper> existingDivorces = divorceDao.findByMembers(divorceInfo);
         if(existingDivorces != null && existingDivorces.size() > 0) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
@@ -118,16 +145,26 @@ public class DivorceController {
 
         divorce.setAcceptance(acceptances);
 
-        divorce.setStatus("Pending");
+        divorce.setStatus("PENDING");
 
         divorceDao.save(divorce);
 
         response.setStatus(HttpServletResponse.SC_OK);
         return "Divorce saved successfully";
     }
-    //TODO: check if user is the same as the one we are searching
+
     @GetMapping("/getDivorceByTaxNumber")
-    public List<DivorcePaper> getDivorceByTaxNumber(String taxNumber) {
+    public List<DivorcePaper> getDivorceByTaxNumber(String taxNumber, Principal principal) {
+        MemberInfo memberInfo = memberInfoDao.findByTaxNumber(taxNumber);
+
+        if(memberInfo == null) {
+            return null;
+        }
+
+        if(!memberInfo.getUsername().equals(principal.getName())) {
+            return null;
+        }
+
         return divorceDao.findByTaxNumber(taxNumber);
     }
 
@@ -138,6 +175,11 @@ public class DivorceController {
         if(divorce == null) {
             response.setStatus(404);
             return "Divorce paper does not exist";
+        }
+
+        if(divorce.getStatus().toLowerCase().equals("approved")) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return "You are not allowed to approve this divorce paper. It has already been approved";
         }
 
         if(divorce.getAcceptance().size() != 4) {
@@ -151,7 +193,7 @@ public class DivorceController {
         }
 
 
-        divorce.setStatus("Approved");
+        divorce.setStatus("APPROVED");
         divorceDao.save(divorce);
 
         response.setStatus(HttpServletResponse.SC_OK);
@@ -167,6 +209,11 @@ public class DivorceController {
             return "Divorce paper does not exist";
         }
 
+        if(divorce.getStatus().toLowerCase().equals("approved")) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return "You are not allowed to accept this divorce paper. It has already been approved";
+        }
+
         MemberInfo memberInfo = memberInfoDao.findByUsername(principal.getName());
 
         //check if user is included in divorce
@@ -178,7 +225,7 @@ public class DivorceController {
             }
         }
 
-        if(!exists && !isAdmin(principal)) {
+        if(!exists) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             return "User is not included in divorce";
         }
@@ -214,6 +261,11 @@ public class DivorceController {
             return "Divorce paper does not exist";
         }
 
+        if(divorce.getStatus().toLowerCase().equals("approved")) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            return "You are not allowed to change the notarial action id. The divorce has already been approved";
+        }
+
         if(divorce.getNotarialActionId() != null) {
             response.setStatus(409);
             return "Notarial action id has already been set";
@@ -247,5 +299,12 @@ public class DivorceController {
 
         return userDetails.getAuthorities().stream()
                 .anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"));
+    }
+
+    private boolean hasRole(String username, String role) {
+        UserDetails userDetails = jdbcUserDetailsManager.loadUserByUsername(username);
+
+        return userDetails.getAuthorities().stream()
+                .anyMatch(r -> r.getAuthority().equals(role));
     }
 }
