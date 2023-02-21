@@ -26,9 +26,8 @@
                     <td th:text="${member.getTaxNumber()}"/>
                     <td th:text="${member.getDivorcePapers().size()}"/>
                     <td>
-                        <button type="submit" th:id="${member.getTaxNumber()}"
-                                name="deleteMember"><i class="remove user icon"></i>
-                            Delete</button>
+                        <input type="submit" th:id="${member.getTaxNumber()}"
+                                name="deleteMember" value="Delete"/>
                     </td>
                 </tr>
             </table>

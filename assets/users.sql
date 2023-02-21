@@ -38,7 +38,11 @@ INSERT INTO users(username, password, enabled) VALUES
 ('notary3', '$2a$10$1Hzd.gTzQc/KaguC3BzNO.fkLTRpoVs5eP1M7xbw0PEDcu5LVJGAS', true),
 ('notary4', '$2a$10$1Hzd.gTzQc/KaguC3BzNO.fkLTRpoVs5eP1M7xbw0PEDcu5LVJGAS', true),
 ('notary5', '$2a$10$1Hzd.gTzQc/KaguC3BzNO.fkLTRpoVs5eP1M7xbw0PEDcu5LVJGAS', true),
-('admin', '$2a$10$1Hzd.gTzQc/KaguC3BzNO.fkLTRpoVs5eP1M7xbw0PEDcu5LVJGAS', true);
+('admin', '$2a$10$1Hzd.gTzQc/KaguC3BzNO.fkLTRpoVs5eP1M7xbw0PEDcu5LVJGAS', true),
+('user1', '$2a$10$1Hzd.gTzQc/KaguC3BzNO.fkLTRpoVs5eP1M7xbw0PEDcu5LVJGAS', true),
+('user2', '$2a$10$1Hzd.gTzQc/KaguC3BzNO.fkLTRpoVs5eP1M7xbw0PEDcu5LVJGAS', true),
+('user3', '$2a$10$1Hzd.gTzQc/KaguC3BzNO.fkLTRpoVs5eP1M7xbw0PEDcu5LVJGAS', true),
+('user4', '$2a$10$1Hzd.gTzQc/KaguC3BzNO.fkLTRpoVs5eP1M7xbw0PEDcu5LVJGAS', true);
 
 INSERT INTO authorities(username, authority) VALUES
 ('lawyer1', 'ROLE_LAWYER'),
@@ -69,7 +73,11 @@ INSERT INTO authorities(username, authority) VALUES
 ('admin', 'ROLE_ADMIN'),
 ('admin', 'ROLE_LAWYER'),
 ('admin', 'ROLE_SPOUSE'),
-('admin', 'ROLE_NOTARY');
+('admin', 'ROLE_NOTARY'),
+('user1', 'ROLE_SPOUSE'),
+('user2', 'ROLE_SPOUSE'),
+('user3', 'ROLE_LAWYER'),
+('user4', 'ROLE_NOTARY');
 
 
 

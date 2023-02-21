@@ -227,13 +227,12 @@ color: green;
 .Lucida_Handwriting {
     font-family:Lucida Handwriting;
     text-decoration:none;
-    flex: 1;
 }
 
 
 .cover-container {
-    max-width: 42em;
-    width: auto;
+    max-width: 55em;
+    min-width: 50em;
 }
 
 
@@ -761,4 +760,24 @@ my_divorces list
 
 .smaller {
     font-size: 0.8em;
+}
+
+/* width */
+.styled-table::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+.styled-table::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.styled-table::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+.styled-table::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

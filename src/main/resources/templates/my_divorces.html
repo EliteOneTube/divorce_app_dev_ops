@@ -31,28 +31,25 @@
                 <td th:text="${divorce.getStatus()}"/>
                 <td th:text="${divorce.getNotarialActionId()}"/>
                 <td th:if="${#authorization.expression('hasAnyRole(''LAWYER'', ''SPOUSE'')')} and ${divorce.getStatus().toLowerCase().equals('pending')}">
-                    <button type="submit" th:id="${divorce.getId()}"
-                            name="acceptDivorce"><i class="remove user icon"></i>
-                        Accept</button>
+                    <input type="submit" th:id="${divorce.getId()}"
+                            name="acceptDivorce" value="Accept"/>
                 </td>
                 <td th:if="${#authorization.expression('hasRole(''LAWYER'')')} and ${divorce.getStatus().toLowerCase().equals('pending')}">
-                    <button type="submit" th:id="${divorce.getId()}"
-                            name="cancelDivorce"><i class="remove user icon"></i>
-                        Cancel</button>
+                    <input type="submit" th:id="${divorce.getId()}"
+                            name="cancelDivorce" value="Cancel"/>
                 </td>
                 <td th:if="${#authorization.expression('hasRole(''NOTARY'')')} and ${divorce.getStatus().toLowerCase().equals('pending')}">
-                    <button type="submit" th:id="${divorce.getId()}"
-                            name="approveDivorce"><i class="remove user icon"></i>
-                        Approve</button>
+                    <input type="submit" th:id="${divorce.getId()}"
+                            name="approveDivorce" value="Approve"/>
                 </td>
                 <td th:if="${#authorization.expression('hasAnyRole(''LAWYER'', ''SPOUSE'')')} and ${divorce.getStatus().toLowerCase().equals('approved')}">
-                    Divorce Filed
+                    -
                 </td>
                 <td th:if="${#authorization.expression('hasRole(''LAWYER'')')} and ${divorce.getStatus().toLowerCase().equals('approved')}">
-                    Divorce Filed
+                    -
                 </td>
                 <td th:if="${#authorization.expression('hasRole(''NOTARY'')')} and ${divorce.getStatus().toLowerCase().equals('approved')}">
-                    Divorce Filed
+                    -
                 </td>
             </tr>
         </table>
