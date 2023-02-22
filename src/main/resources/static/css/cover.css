@@ -502,13 +502,13 @@ input[type=submit]:hover{
 
 /*Register*/
 .register-box {
-  margin: 3rem auto;
-  width: 400px;
-  padding: 40px;
-  background: none;
-  box-sizing: border-box;
-  box-shadow: 0 15px 25px rgba(0,0,0,.6);
-  border-radius: 10px;
+    margin: 3rem auto;
+    width: 400px;
+    padding: 40px;
+    background: none;
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0,0,0,.6);
+    border-radius: 10px
 }
 
 .register-box h2 {
