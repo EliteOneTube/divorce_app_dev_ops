@@ -50,6 +50,7 @@ public class SecurityConfig {
                 .requestMatchers("/divorce_cancellation").hasRole("LAWYER")
                 .requestMatchers("/account_details").hasRole("NOTARY")
                 .requestMatchers("/notarialActionId/**").hasRole("NOTARY")
+                .requestMatchers("/cu").hasRole("ADMIN")
                 //μόλις φτιαχτεί να το αλλάξω
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/login").defaultSuccessUrl("/my_divorces", true).permitAll()

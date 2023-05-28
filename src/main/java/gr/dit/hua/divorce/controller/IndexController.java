@@ -67,6 +67,9 @@ public class IndexController{
     @GetMapping("/members")
     public String members(Model model) {
         model.addAttribute("members", memberInfoDao.findAll());
-        return "members";
+        return "admin/members";
     }
+
+    @GetMapping("/cu")
+    public String create_user() { return "admin/create_user";}
 }

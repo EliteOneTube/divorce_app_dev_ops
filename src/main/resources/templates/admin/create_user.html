@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:cdp="http://www.ultraq.net.nz/thymeleaf/cdp"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Create a user</title>
+</head>
+<div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+    <main role="main" class="inner cover" layout:fragment="main-content">
+        <div main-content class="register-box">
+            <p11>Fill in the following form</p11>
+            <p></p>
+            <form name="divorceInfo">
+                <div class="user-box">
+                    <input type="text" name="username" required=""/>
+                    <label>Username</label>
+                </div>
+                <div class="user-box">
+                    <input type="text" name="password" required=""/>
+                    <label>Password</label>
+                </div>
+                <div class="user-box">
+                    <input type="text" name="email" required=""/>
+                    <label>Email</label>
+                </div>
+                <div class="user-box">
+                    <input type="text" name="fullName" required=""/>
+                    <label>Full Name</label>
+                </div>
+                <div class="user-box">
+                    <input type="text" name="taxNumber" required=""/>
+                    <label>Tax Number</label>
+                </div>
+                <div class="user-box">
+                    <select id="role" required="" class="form-control" name="role">
+                        <option value="SPOUSE">Spouse</option>
+                        <option value="LAWYER">Lawyer</option>
+                        <option value="NOTARY">Notary</option>
+                        <option value="ADMIN">Admin</option>
+                    </select>
+                </div>
+                <p></p>
+                <div>
+                    <a href="#">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
+                        <div>
+                            <input type="submit" name="submitButton"/>
+                        </div>
+                    </a>
+                </div>
+            </form>
+        </div>
+
+        <div class="alert" name="alert">
+
+        </div>
+
+
+        <script type="text/javascript">
+            $("[name='divorceInfo']").on("submit", (e) => {
+                e.preventDefault();
+
+                const username = $("[name='username']").val();
+                const password = $("[name='password']").val();
+                const email = $("[name='email']").val();
+                const fullName = $("[name='fullName']").val();
+                const taxNumber = $("[name='taxNumber']").val();
+                const role = $("[name='role']").val();
+
+                if(!username || !password || !email || !fullName || !taxNumber || !role){
+                    createAlert("Please fill in all the fields", "Warning")
+                    return;
+                }
+
+                const urlCall = "/member/createMember";
+                const data = {
+                    username: username,
+                    password: password,
+                    email: email,
+                    fullName: fullName,
+                    taxNumber: taxNumber,
+                    role: role
+                };
+
+                $.ajax({
+                    url: urlCall,
+                    type: "POST",
+                    data: JSON.stringify(data),
+                    contentType: "application/json",
+                    success: function (data) {
+                        createAlert("User successfully created", "Success")
+                    },
+                    error: function (xhr, exception) {
+                        createAlert("Error creating divorce: " + xhr.responseText, "Warning")
+                    }
+                });
+            })
+
+            function createAlert(message, type){
+                const alert = $("[name='alert']");
+                alert.addClass("alert " + type);
+                alert.text(message);
+
+                setTimeout(() => {
+                    alert.removeClass("alert " + type);
+                    alert.text("");
+                    location.reload();
+                }, 3000);
+            }
+        </script>
+    </main>
+</div>
+</body>
+</html>
