@@ -10,3 +10,7 @@
 
 #  Execution Using Docker
   * Build and run the container with `docker-compose up --build -d`
+
+# Execution Using ansible(Will Install Docker and run the container)
+  * Install ansible `sudo apt install ansible`
+  * Run the playbook `ansible-playbook playbooks/docker_run.yml`
