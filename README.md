@@ -13,4 +13,4 @@
 
 # Execution Using ansible(Will Install Docker and run the container)
   * Install ansible `sudo apt install ansible`
-  * Run the playbook `ansible-playbook playbooks/docker_run.yml`
+  * Run the playbook `ansible-playbook playbooks/docker_run.yml --ask-become-pass`
