@@ -1,0 +1,24 @@
+- hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Install vagrant
+      apt: name=vagrant state=latest update_cache=yes force_apt_get=yes
+
+    - name: Install virtualbox
+      apt: name=virtualbox state=latest update_cache=yes force_apt_get=yes
+
+    - name: Install vagrant plugin
+      command: vagrant plugin install vagrant-hostmanager
+
+    - name: Run vagrant up
+      command: vagrant up
+
+    - name: Run ssh control
+      command: vagrant ssh-control
+
+    - name: Run ssh-config
+      command: vagrant ssh-config >> ~/.ssh/config
+
+    - name: Export variable for wsl
+      command: export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"

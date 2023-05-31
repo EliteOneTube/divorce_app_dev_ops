@@ -1,4 +1,4 @@
-- hosts: localhost
+- hosts: docker
   become: yes
 
   tasks:
