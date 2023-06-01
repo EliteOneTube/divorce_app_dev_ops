@@ -1,0 +1,33 @@
+- hosts: localhost
+  become: yes
+
+  tasks:
+    - name: Install Java
+      apt: name=openjdk-17-jdk state=latest update_cache=yes force_apt_get=yes
+
+    - name: Install Maven
+      apt: name=maven state=latest update_cache=yes force_apt_get=yes
+
+    - name: Install Git
+      apt: name=git state=latest update_cache=yes force_apt_get=yes
+
+    - name: Clone Spring Boot Application
+      git: repo=https://github.com/EliteOneTube/divorce_app.git
+              dest=/home/ubuntu/spring-boot
+              version=HEAD
+
+    - name: Build Spring Boot Application
+      command: mvn clean install
+      args:
+          chdir: /home/ubuntu/spring-boot
+
+    - name: Copy template.env to .env
+      copy:
+        src: /home/ubuntu/spring-boot/template.env
+        dest: /home/ubuntu/spring-boot/.env
+
+    - name: Run Spring Boot Application
+      command: mvn spring-boot:run
+      args:
+          chdir: /home/ubuntu/spring-boot/target/classes
+

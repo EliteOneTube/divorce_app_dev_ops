@@ -17,5 +17,6 @@
 
 # Execution Using ansible && vagrant(Will Install Vagrant and run on vms spawned by Vagrant)
 * Install ansible `sudo apt install ansible`
-* Run the playbook `ansible-playbook playbooks/vagrant_install.yml --ask-become-pass`
-* Run the playbook `ansible-playbook playbooks/postgres.yml --ask-become-pass`
+* Install vagrant and run the vms `ansible-playbook playbooks/vagrant_install.yml --ask-become-pass`
+* Run the database `ansible-playbook playbooks/postgres.yml --ask-become-pass`
+* Run the app `ansible-playbook playbooks/spring-boot.yml --ask-become-pass`

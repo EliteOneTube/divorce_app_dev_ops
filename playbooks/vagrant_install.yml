@@ -19,6 +19,3 @@
 
     - name: Run ssh-config
       command: vagrant ssh-config >> ~/.ssh/config
-
-    - name: Export variable for wsl
-      command: export VAGRANT_WSL_ENABLE_WINDOWS_ACCESS="1"
