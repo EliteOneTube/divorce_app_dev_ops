@@ -1,4 +1,5 @@
-- hosts: localhost
+---
+- hosts: webserver
   become: yes
 
   tasks:
@@ -20,11 +21,6 @@
       command: mvn clean install
       args:
           chdir: /home/ubuntu/spring-boot
-
-    - name: Copy template.env to .env
-      copy:
-        src: /home/ubuntu/spring-boot/template.env
-        dest: /home/ubuntu/spring-boot/.env
 
     - name: Run Spring Boot Application
       command: mvn spring-boot:run
