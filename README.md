@@ -11,12 +11,16 @@
 #  Execution Using Docker
 * Build and run the container with `docker-compose up --build -d`
 
-# Execution Using ansible(Will Install Docker and run the container on your machine)
+# Ansible + Docker
 * Install ansible `sudo apt install ansible`
 * Run the playbook `ansible-playbook playbooks/docker_run.yml --ask-become-pass`
 
-# Execution Using ansible && vagrant(Will Install Vagrant and run on vms spawned by Vagrant)
+# Ansible + Vagrant
 * Install ansible `sudo apt install ansible`
-* Install vagrant and run the vms `ansible-playbook playbooks/vagrant_install.yml --ask-become-pass`
-* Run the database `ansible-playbook playbooks/postgres.yml --ask-become-pass`
-* Run the app `ansible-playbook playbooks/spring-boot.yml --ask-become-pass`
+* Install vagrant `sudo apt install vagrant`
+* Install virtualbox `sudo apt install virtualbox`
+* Install vagrant plugin `vagrant plugin install vagrant-hostmanager`
+* Run vagrant `vagrant up`
+* Run `vagrant ssh-config >> ~/.ssh/config`
+* Run the postgres playbook `ansible-playbook playbooks/postgres.yml`
+* Run the divorce app playbook `ansible-playbook playbooks/spring-boot.yml`
