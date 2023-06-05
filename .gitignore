@@ -37,3 +37,5 @@ build/
 
 ### Vagrant ###
 *.vagrant/
+/vagrant/control.pub
+**ubuntu**

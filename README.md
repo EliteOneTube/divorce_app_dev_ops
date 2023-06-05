@@ -20,7 +20,8 @@
 * Install vagrant `sudo apt install vagrant`
 * Install virtualbox `sudo apt install virtualbox`
 * Install vagrant plugin `vagrant plugin install vagrant-hostmanager`
+* Change directory `cd vagrant`
 * Run vagrant `vagrant up`
 * Run `vagrant ssh-config >> ~/.ssh/config`
-* Run the postgres playbook `ansible-playbook playbooks/postgres.yml`
-* Run the divorce app playbook `ansible-playbook playbooks/spring-boot.yml`
+* Run the postgres playbook `ansible-playbook ../playbooks/postgres.yml -i ../hosts.yml`
+* Run the divorce app playbook `ansible-playbook ../playbooks/spring-boot.yml -i ../hosts.yml`

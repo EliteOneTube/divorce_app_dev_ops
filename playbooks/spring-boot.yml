@@ -3,11 +3,19 @@
   become: yes
 
   tasks:
-    - name: Install Java
+    - name: Install openjdk-17-jdk
       apt: name=openjdk-17-jdk state=latest update_cache=yes force_apt_get=yes
 
-    - name: Install Maven
-      apt: name=maven state=latest update_cache=yes force_apt_get=yes
+    - name: Install Maven 3.9.2
+      command: curl -O https://dlcdn.apache.org/maven/maven-3/3.9.2/binaries/apache-maven-3.9.2-bin.zip
+      args:
+          chdir: /home/ubuntu
+
+    - name: Install Unzip
+      apt: name=unzip state=latest update_cache=yes force_apt_get=yes
+
+    - name: Unzip Maven
+      unarchive: src=/home/ubuntu/apache-maven-3.9.2-bin.zip dest=/home/ubuntu remote_src=yes
 
     - name: Install Git
       apt: name=git state=latest update_cache=yes force_apt_get=yes
@@ -18,12 +26,18 @@
               version=HEAD
 
     - name: Build Spring Boot Application
-      command: mvn clean install
+      shell: mvn clean install -DskipTests
       args:
           chdir: /home/ubuntu/spring-boot
+          executable: /bin/bash
+      environment:
+          PATH: /home/ubuntu/apache-maven-3.9.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 
     - name: Run Spring Boot Application
-      command: mvn spring-boot:run
+      shell: mvn exec:java -Dexec.mainClass=gr.dit.hua.divorce.DivorceApplication
       args:
-          chdir: /home/ubuntu/spring-boot/target/classes
+          chdir: /home/ubuntu/spring-boot
+          executable: /bin/bash
+      environment:
+          PATH: /home/ubuntu/apache-maven-3.9.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 
