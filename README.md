@@ -25,4 +25,4 @@
 * Run `vagrant ssh-config >> ~/.ssh/config`
 * Run the postgres playbook `ansible-playbook ../playbooks/postgres.yml -i ../hosts.yml`
 * Run the divorce app playbook `ansible-playbook ../playbooks/spring-boot.yml -i ../hosts.yml`
-* Visit `192.168.56.111:8080` or `192.168.56.112:8080` to see the app running
+* Visit `192.168.56.111:8080` or `192.168.56.112:8080` to see the app running(Takes a few seconds to get up and running)

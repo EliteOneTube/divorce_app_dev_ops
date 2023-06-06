@@ -33,8 +33,13 @@
       environment:
           PATH: /home/ubuntu/apache-maven-3.9.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 
+    - name: Stop any running Spring Boot Application
+      shell: kill -9 $(lsof -t -i:8080)
+      args:
+          executable: /bin/bash
+
     - name: Run Spring Boot Application
-      shell: nohup mvn exec:java -Dexec.mainClass=gr.dit.hua.divorce.DivorceApplication
+      shell: nohup mvn exec:java -Dexec.mainClass=gr.dit.hua.divorce.DivorceApplication &
       args:
           chdir: /home/ubuntu/spring-boot
           executable: /bin/bash
