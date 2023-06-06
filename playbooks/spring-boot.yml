@@ -40,4 +40,5 @@
           executable: /bin/bash
       environment:
           PATH: /home/ubuntu/apache-maven-3.9.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+          DB_SERVER: "{{ hostvars['database']['ansible_host'] }}"
 

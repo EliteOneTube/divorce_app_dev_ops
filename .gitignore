@@ -39,3 +39,4 @@ build/
 *.vagrant/
 /vagrant/control.pub
 **ubuntu**
+**nano**

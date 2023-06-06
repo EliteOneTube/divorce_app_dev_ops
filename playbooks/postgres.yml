@@ -47,3 +47,20 @@
         privs: all
       become: yes
       become_user: postgres
+
+    - name: Enable TCP/IP connections for 5432 port
+      lineinfile:
+        path: /etc/postgresql/12/main/postgresql.conf
+        regexp: '^#listen_addresses'
+        line: "listen_addresses = '*'"
+        state: present
+      become: yes
+      become_user: postgres
+      notify:
+        - restart postgresql
+
+    - name: Allow all connections
+      lineinfile:
+        path: /etc/postgresql/12/main/pg_hba.conf
+        regexp: '^host'
+        line: "host all all 0.0.0.0/0 md5"
