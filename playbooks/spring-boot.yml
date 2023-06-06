@@ -34,11 +34,10 @@
           PATH: /home/ubuntu/apache-maven-3.9.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
 
     - name: Run Spring Boot Application
-      shell: mvn exec:java -Dexec.mainClass=gr.dit.hua.divorce.DivorceApplication
+      shell: nohup mvn exec:java -Dexec.mainClass=gr.dit.hua.divorce.DivorceApplication
       args:
           chdir: /home/ubuntu/spring-boot
           executable: /bin/bash
       environment:
           PATH: /home/ubuntu/apache-maven-3.9.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
-          DB_SERVER: "{{ hostvars['database']['ansible_host'] }}"
-
+          DB_SERVER: "{{ hostvars['db'].ansible_host }}"
