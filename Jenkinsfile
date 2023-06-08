@@ -14,5 +14,12 @@ pipeline {
                 '''
             }
         }
+        stage('Install Divorce app') {
+            steps {
+                sh '''
+                    ansible-playbook -i ~/workspace/divorce_app/hosts.yml ~/workspace/divorce_app/playbooks/spring-boot.yml
+                '''
+            }
+        }
     }
 }
