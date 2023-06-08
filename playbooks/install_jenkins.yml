@@ -1,19 +1,21 @@
-- hosts: control
+- hosts: localhost
   become: yes
-
+  become_method: sudo
   tasks:
     - name: Install openjdk-17-jdk
       apt: name=openjdk-17-jdk state=latest update_cache=yes force_apt_get=yes
 
     - name: Download Jenkins repo key
       apt_key:
-          url: https://pkg.jenkins.io/debian-stable/jenkins.io.key
+          url: https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key
           state: present
 
     - name: Ensure the repository is configured
       apt_repository:
           repo: deb https://pkg.jenkins.io/debian-stable binary/
           state: present
+          filename: jenkins.io
+          update_cache: yes
 
     - name: Update apt and install Jenkins
       apt:

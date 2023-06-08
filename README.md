@@ -1,14 +1,14 @@
 # Setting up 
 * Git clone the repo to your local machine with `git clone https://github.com/EliteOneTube/divorce_app.git`
-* Create a .env file following the template.env file example
+* NOTE: All executions that run on localhost can be run on a different machine by changing the playbooks
 
 # Execution Using maven
-* Initialize the database with `docker run --name spb_db --rm -e POSTGRES_DB=divorces -e POSTGRES_PASSWORD=pass123  -p 5432:5432 -v pgdata14:/var/lib/postgresql/data  -d postgres:14`
+* Initialize the database with `docker run --name db --rm -e POSTGRES_DB=divorces -e POSTGRES_PASSWORD=pass123  -p 5432:5432 -v pgdata14:/var/lib/postgresql/data  -d postgres:14`
 * Install  `mvn clean install`
 * Package `mvn package`
 * Run `mvn exec:java -Dexec.mainClass=gr.dit.hua.divorce.DivorceApplication`
 
-#  Execution Using Docker
+# Docker
 * Build and run the container with `docker-compose up --build -d`
 
 # Ansible + Docker
@@ -35,7 +35,5 @@
 * Change directory `cd vagrant`
 * Run vagrant `vagrant up`
 * Run `vagrant ssh-config >> ~/.ssh/config`
-* Run the installation playbook `ansible-playbook ../playbooks/install_jenkins.yml -i ../hosts.yml`
-* Ssh into the jenkins machine `vagrant ssh control`
-* Visit `192.168.56.10:8080` to see the jenkins server and follow the instructions to set it up
-* Install the ansible plugin on the jenkins server `sudo apt install ansible`
+* Run the installation playbook `ansible-playbook ../playbooks/install_jenkins.yml -i ../hosts.yml --ask-become-pass`
+* Visit `localhost:8080` to see the jenkins server and follow the instructions to set it up
