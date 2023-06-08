@@ -8,9 +8,11 @@ pipeline {
             }
         }
         stage('Install postgres using ansible') {
-            sh ```
-                ansible-playbook -i ~workspace/divorce_app/hosts.yml ~workspace/divorce_app/playbooks/postgres.yml
-            ```
+            steps {
+                sh ```
+                    ansible-playbook -i ~workspace/divorce_app/hosts.yml ~workspace/divorce_app/playbooks/postgres.yml
+                ```
+            }
         }
     }
 }
