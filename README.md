@@ -26,3 +26,14 @@
 * Run the postgres playbook `ansible-playbook ../playbooks/postgres.yml -i ../hosts.yml`
 * Run the divorce app playbook `ansible-playbook ../playbooks/spring-boot.yml -i ../hosts.yml`
 * Visit `192.168.56.111:8080` or `192.168.56.112:8080` to see the app running(Takes a few seconds to get up and running)
+
+# Ansible + Vagrant + Jenkins
+* Install ansible `sudo apt install ansible`
+* Install vagrant `sudo apt install vagrant`
+* Install virtualbox `sudo apt install virtualbox`
+* Install vagrant plugin `vagrant plugin install vagrant-hostmanager`
+* Change directory `cd vagrant`
+* Run vagrant `vagrant up`
+* Run `vagrant ssh-config >> ~/.ssh/config`
+* Run the installation playbook `ansible-playbook ../playbooks/install_jenkins.yml -i ../hosts.yml`
+* Ssh into the jenkins machine `vagrant ssh control`

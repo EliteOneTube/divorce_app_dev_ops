@@ -1,0 +1,21 @@
+---
+- hosts: control
+  become: yes
+  tasks:
+    - name: Install openjdk-17-jdk
+      apt: name=openjdk-17-jdk state=latest update_cache=yes force_apt_get=yes
+
+    - name: Curl key
+      command: curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2023.key | sudo tee \ /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+
+    - name: Test
+      command: echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] \ https://pkg.jenkins.io/debian-stable binary/ | sudo tee \ /etc/apt/sources.list.d/jenkins.list > /dev/null
+
+    - name: Update apt
+      apt:
+          update_cache: yes
+
+    - name: Install Jenkins
+      apt:
+          name: jenkins
+          state: present
