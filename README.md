@@ -37,3 +37,4 @@
 * Run `vagrant ssh-config >> ~/.ssh/config`
 * Run the installation playbook `ansible-playbook ../playbooks/install_jenkins.yml -i ../hosts.yml`
 * Ssh into the jenkins machine `vagrant ssh control`
+* Visit `192.168.56.10:8080` to see the jenkins server and follow the instructions to set it up
