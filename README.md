@@ -37,3 +37,5 @@
 * Run `vagrant ssh-config >> ~/.ssh/config`
 * Run the installation playbook `ansible-playbook ../playbooks/install_jenkins.yml -i ../hosts.yml --ask-become-pass`
 * Visit `localhost:8080` to see the jenkins server and follow the instructions to set it up
+* Create a new pipeline job and set the pipeline script to `Jenkinsfile` of this repo
+* Build the job and visit `192.168.56.111:8080` or `192.168.56.112:8080` to see the app running(Takes a few seconds to get up and running)

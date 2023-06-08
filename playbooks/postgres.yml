@@ -11,6 +11,7 @@
       with_items:
         - postgresql
         - python3-psycopg2
+        - acl
 
   tasks:
     - name: "Find out if PostgreSQL is initialized"
@@ -27,6 +28,7 @@
       postgresql_db:
         state: present
         name: "{{ db_name }}"
+      become: yes
       become_user: postgres
 
     - name: "Create db user"
