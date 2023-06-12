@@ -10,37 +10,37 @@ spec:
     replicas: 1
     selector:
         matchLabels:
-        app: divorce
+          app: divorce
     template:
         metadata:
-        labels:
-            app: divorce
+          labels:
+              app: divorce
         spec:
-        volumes:
-          - name: divorce-storage
-            persistentVolumeClaim:
-                claimName: divorce-volume
-        containers:
-        - name: divorce
-          image: #PUSH IMAGE TO GITHUB PACKAGES
-          resources:
-            requests:
-                memory: "128Mi"
-                cpu: "100m"
-            limits:
-                memory: "128Mi"
-                cpu: "500m"
-          ports:
-          - containerPort: 8080
-            name: divorce
-          volumeMounts:
-            - mountPath: /storage
-              name: divorce-storage
-          env:
-            - name: DB_SERVER
-              value: db:5432
-            - name: DB_USER
-              value: postgres
-            - name: DB_PASSWORD
-              value: pass123
-        restartPolicy: Always
+          volumes:
+            - name: divorce-storage
+              persistentVolumeClaim:
+                  claimName: divorce-volume
+          containers:
+          - name: divorce
+            image: #PUSH IMAGE TO GITHUB PACKAGES
+            resources:
+              requests:
+                  memory: "128Mi"
+                  cpu: "100m"
+              limits:
+                  memory: "128Mi"
+                  cpu: "500m"
+            ports:
+            - containerPort: 8080
+              name: divorce
+            volumeMounts:
+              - mountPath: /storage
+                name: divorce-storage
+            env:
+              - name: DB_SERVER
+                value: db:5432
+              - name: DB_USER
+                value: postgres
+              - name: DB_PASSWORD
+                value: pass123
+          restartPolicy: Always
