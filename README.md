@@ -38,4 +38,9 @@
 * Run the installation playbook `ansible-playbook ../playbooks/install_jenkins.yml -i ../hosts.yml --ask-become-pass`
 * Visit `localhost:8080` to see the jenkins server and follow the instructions to set it up
 * Create a new pipeline job and set the pipeline script to `Jenkinsfile` of this repo
-* Build the job and visit `192.168.56.111:8080` or `192.168.56.112:8080` to see the app running(Takes a few seconds to get up and running)
+* You have to create new ssh key for the jenkins user and add it to the autorized keys of the vagrant vms that run the app
+* Build the job and visit `192.168.56.111:8080` to see the app running(Takes a few seconds to get up and running)
+
+# Ansible + Vagrant + Jenkins + Kubernets
+* Install ansible `sudo snap install microk8s --classic`
+* Run `sudo ufw allow in on eth0 && sudo ufw allow out on eth0 sudo ufw default allow routed` (eth0 should be replaced by what you get from `ip a`)
