@@ -46,3 +46,5 @@
       environment:
           PATH: /home/ubuntu/apache-maven-3.9.2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
           DB_SERVER: "{{ hostvars['db'].ansible_host }}"
+          DB_USER: "postgres"
+          DB_PASSWORD: "pass123"
