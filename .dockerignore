@@ -36,3 +36,10 @@ build/
 
 ### Vagrant ###
 *.vagrant/
+/vagrant/control.pub
+**ubuntu**
+**nano**
+**.log
+
+### KUBECTL ###
+**kubectl**

@@ -42,5 +42,4 @@
 * Build the job and visit `192.168.56.111:8080` to see the app running(Takes a few seconds to get up and running)
 
 # Ansible + Vagrant + Jenkins + Kubernets
-* Install ansible `sudo snap install microk8s --classic`
-* Run `sudo ufw allow in on eth0 && sudo ufw allow out on eth0 sudo ufw default allow routed` (eth0 should be replaced by what you get from `ip a`)
+* Install microk8s by following the instructions [here](https://ubuntu.com/tutorials/install-a-local-kubernetes-with-microk8s#1-overview)

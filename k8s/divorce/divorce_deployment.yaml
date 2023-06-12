@@ -1,4 +1,19 @@
-#k8s file
+apiVersion: v1
+kind: Service
+metadata:
+  name: divorce-service
+  namespace: default
+spec:
+    selector:
+        app: divorce
+    ports:
+      - protocol: TCP
+        port: 8080
+        name: divorce-service
+        targetPort: 8080
+    type: ClusterIP
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,13 +31,9 @@ spec:
           labels:
               app: divorce
         spec:
-          volumes:
-            - name: divorce-storage
-              persistentVolumeClaim:
-                  claimName: divorce-volume
           containers:
           - name: divorce
-            image: #PUSH IMAGE TO GITHUB PACKAGES
+            image: ghcr.io/eliteonetube/divorce_app:v0.1
             resources:
               requests:
                   memory: "128Mi"

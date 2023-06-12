@@ -40,3 +40,7 @@ build/
 /vagrant/control.pub
 **ubuntu**
 **nano**
+**.log
+
+### KUBECTL ###
+**kubectl**
