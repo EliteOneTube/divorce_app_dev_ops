@@ -32,7 +32,7 @@ spec:
         spec:
           containers:
           - name: divorce
-            image: ghcr.io/eliteonetube/divorce_app:v0.1
+            image: ghcr.io/eliteonetube/divorce_app:v0.2
             resources:
               requests:
                   memory: "128Mi"
