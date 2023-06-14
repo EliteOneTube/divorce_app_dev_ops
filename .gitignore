@@ -44,3 +44,5 @@ build/
 
 ### KUBECTL ###
 **kubectl**
+**.dockerconfigjson
+**container-registry-secret.yml

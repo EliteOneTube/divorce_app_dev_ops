@@ -1,0 +1,10 @@
+{
+    "auths": {
+        "https://ghcr.io":{
+            "username":"",
+            "password":"token",
+            "email":"",
+            "auth":""
+    	}
+    }
+}
