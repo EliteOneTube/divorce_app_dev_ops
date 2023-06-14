@@ -1,8 +1,8 @@
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: divorce-service
-  namespace: default
 spec:
     selector:
         app: divorce
@@ -18,7 +18,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: divorce-app
-  namespace: divorce
   labels:
     app: divorce
 spec:
@@ -44,14 +43,13 @@ spec:
             ports:
             - containerPort: 8080
               name: divorce
-            volumeMounts:
-              - mountPath: /storage
-                name: divorce-storage
             env:
               - name: DB_SERVER
-                value: db:5432
+                value: postgres:5432
               - name: DB_USER
                 value: postgres
               - name: DB_PASSWORD
                 value: pass123
           restartPolicy: Always
+          imagePullSecrets:
+            - name: mysecret
