@@ -33,13 +33,6 @@ spec:
           containers:
           - name: divorce
             image: ghcr.io/eliteonetube/divorce_app:v0.2
-            resources:
-              requests:
-                  memory: "128Mi"
-                  cpu: "100m"
-              limits:
-                  memory: "128Mi"
-                  cpu: "500m"
             ports:
             - containerPort: 8080
               name: divorce

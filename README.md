@@ -2,12 +2,6 @@
 * Git clone the repo to your local machine with `git clone https://github.com/EliteOneTube/divorce_app.git`
 * NOTE: All executions that run on localhost can be run on a different machine by changing the playbooks
 
-# Execution Using maven
-* Initialize the database with `docker run --name db --rm -e POSTGRES_DB=divorces -e POSTGRES_PASSWORD=pass123  -p 5432:5432 -v pgdata14:/var/lib/postgresql/data  -d postgres:14`
-* Install  `mvn clean install`
-* Package `mvn package`
-* Run `mvn exec:java -Dexec.mainClass=gr.dit.hua.divorce.DivorceApplication`
-
 # Docker
 * Build and run the container with `docker-compose up --build -d`
 
@@ -41,5 +35,9 @@
 * You have to create new ssh key for the jenkins user and add it to the autorized keys of the vagrant vms that run the app
 * Build the job and visit `192.168.56.111:8080` to see the app running(Takes a few seconds to get up and running)
 
-# Ansible + Jenkins + Kubernets
+# Kubernets
 * Install microk8s by following the instructions [here](https://ubuntu.com/tutorials/install-a-local-kubernetes-with-microk8s#1-overview)
+* Configure the templates files in /k8s/divorce directory
+* Apply the yml files with `kubectl apply -f <name>`
+* Forward the port of the pod with `kubectl port-forward pods/<pod-name> 8000:8080`
+* Visit `localhost:8000` to see the app running(Takes a few seconds to get up and running)
