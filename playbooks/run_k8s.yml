@@ -2,10 +2,9 @@
 - hosts: localhost
   
   tasks:
-    - name: Change directory to k8s
-      command: cd /var/lib/jenkins/workspace/k8s/
-  
     - name: Apply kubectl yml files
       command: kubectl apply -f {{ item }}
       with_fileglob:
         - /k8s/divorce/*.yml
+      args:
+        chdir: /var/lib/jenkins/workspace/k8s/
