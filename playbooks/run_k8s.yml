@@ -4,10 +4,13 @@
   become_user: root
 
   tasks:
+    - name: Change to k8s directory
+      command: cd ~/workspace/k8s/
+      args:
+        chdir: ~/workspace/k8s/
+        executable: /bin/bash
+  
     - name: Apply kubectl yml files
       command: kubectl apply -f {{ item }}
       with_fileglob:
         - k8s/divorce/*.yml
-      args:
-        chdir: ~/workspace/k8s/
-        executable: /bin/bash
