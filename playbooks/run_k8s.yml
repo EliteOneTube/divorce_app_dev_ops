@@ -1,0 +1,8 @@
+---
+- hosts: localhost
+
+  tasks:
+    - name: Apply kubectl yml files
+      command: kubectl apply -f {{ item }}
+      with_fileglob:
+        - ../k8s/divorce/*.yml
