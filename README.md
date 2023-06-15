@@ -35,7 +35,7 @@
 * You have to create new ssh key for the jenkins user and add it to the autorized keys of the vagrant vms that run the app
 * Build the job and visit `192.168.56.111:8080` to see the app running(Takes a few seconds to get up and running)
 
-# Kubernets + ansible + jenkins
+# Kubernetes + ansible + jenkins
 * Install microk8s by following the instructions [here](https://ubuntu.com/tutorials/install-a-local-kubernetes-with-microk8s#1-overview)
 * Install ansible `sudo apt install ansible`
 * install kubectl by following the instructions [here](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
