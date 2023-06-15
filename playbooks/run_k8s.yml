@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: k8s
 
   tasks:
     - name: Apply kubectl yml files
