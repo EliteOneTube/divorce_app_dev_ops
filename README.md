@@ -40,7 +40,11 @@
 * Install ansible `sudo apt install ansible`
 * install kubectl by following the instructions [here](https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/)
 * Run the installation playbook for jenkins `ansible-playbook ../playbooks/install_jenkins.yml -i ../hosts.yml --ask-become-pass`
+* Visit `localhost:8080` to see the jenkins server and follow the instructions to set it up
+* Create a new pipeline job and set the pipeline script to `k8s.Jenkinsfile` of this repo
+* Jenkins user should be authorized with the kubernetes server
 * Configure the templates files in /k8s/divorce directory
 * Run the playbook `ansible-playbook ../playbooks/run_k8s.yml`
+* Get pods with `kubectl get pods`
 * Forward the port of the pod with `kubectl port-forward pods/<pod-name> 8000:8080`
 * Visit `localhost:8000` to see the app running(Takes a few seconds to get up and running)
