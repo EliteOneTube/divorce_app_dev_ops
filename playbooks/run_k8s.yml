@@ -1,7 +1,5 @@
 ---
 - hosts: localhost
-  become: true
-  become_user: root
 
   tasks:
     - name: Apply kubectl yml files
