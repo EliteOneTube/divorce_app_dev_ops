@@ -1,0 +1,48 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: divorce-service
+spec:
+    selector:
+        app: divorce
+    ports:
+      - protocol: TCP
+        port: 8080
+        name: divorce-service
+        targetPort: 8080
+    type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: divorce-app
+  labels:
+    app: divorce
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+          app: divorce
+    template:
+        metadata:
+          labels:
+              app: divorce
+        spec:
+          containers:
+          - name: divorce
+            image: ghcr.io/eliteonetube/divorce_app:v0.2
+            ports:
+            - containerPort: 8080
+              name: divorce
+            env:
+              - name: DB_SERVER
+                value: postgres:5432
+              - name: DB_USER
+                value: postgres
+              - name: DB_PASSWORD
+                value: pass123
+          restartPolicy: Always
+          imagePullSecrets:
+            - name: mysecret
