@@ -6,5 +6,3 @@
       command: kubectl apply -f {{ item }}
       with_fileglob:
         - k8s/divorce/*.yml
-      args:
-        chdir: /var/lib/jenkins/workspace/k8s/

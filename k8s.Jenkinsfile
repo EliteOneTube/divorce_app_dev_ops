@@ -10,7 +10,7 @@ pipeline {
         stage('Apply the k8s files') {
             steps {
                 sh '''
-                    ansible-playbook -i ~/workspace/k8s/hosts.yml ~/workspace/k8s/playbooks/run_k8s.yml -vvvvv
+                    ansible-playbook -i ~/workspace/k8s/hosts.yml ~/workspace/k8s/playbooks/run_k8s.yml
                 '''
             }
         }
