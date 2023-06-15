@@ -1,13 +1,10 @@
 ---
-- hosts: k8s
+- hosts: localhost
   become: true
   become_user: root
 
   tasks:
-    - name: Change to k8s directory
-      command: cd /var/lib/jenkins/workspace/k8s
-  
     - name: Apply kubectl yml files
       command: kubectl apply -f {{ item }}
       with_fileglob:
-        - k8s/divorce/*.yml
+        - ../k8s/divorce/*.yml
