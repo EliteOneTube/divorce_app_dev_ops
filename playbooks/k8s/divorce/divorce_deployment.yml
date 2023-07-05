@@ -10,7 +10,7 @@ spec:
       - protocol: TCP
         port: 8080
         name: divorce-service
-        targetPort: 8080
+        targetPort: 80
     type: ClusterIP
 
 ---
@@ -43,6 +43,21 @@ spec:
                 value: postgres
               - name: DB_PASSWORD
                 value: pass123
+
+          - name: nginx
+            image: nginx:stable
+            ports:
+            - containerPort: 80
+            volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/conf.d
+              readOnly: true
+
+          volumes:
+          - name: nginx-config
+            configMap:
+              name: nginx-config
+
           restartPolicy: Always
           imagePullSecrets:
             - name: mysecret
