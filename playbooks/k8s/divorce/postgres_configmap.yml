@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: postgres-configmap
 data:
-  host: postgres
-  postgres_db: divorces
+  host: "postgres"
+  postgres_db: "divorces"
