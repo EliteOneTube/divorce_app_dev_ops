@@ -1,6 +1,6 @@
 ---
 - hosts: database
-  become: yes
+  become: true
 
   vars_files:
     - ./vars/db.yml
@@ -28,7 +28,7 @@
       postgresql_db:
         state: present
         name: "{{ db_name }}"
-      become: yes
+      become: true
       become_user: postgres
 
     - name: "Create db user"
@@ -36,8 +36,17 @@
         state: present
         name: "{{ db_user }}"
         password: "{{ db_password }}"
-      become: yes
+      become: true
       become_user: postgres
+
+    - name: "Run SQL script"
+      postgresql_db:
+        db: "{{ db_name }}"
+        state: import
+        target: "{{ db_script }}"
+      become: true
+      become_user: postgres
+      when: postgres_data.stat.exists == false
 
     - name: "Grant db user access to app db"
       postgresql_privs:
@@ -46,7 +55,7 @@
         roles: "{{ db_user }}"
         grant_option: no
         privs: all
-      become: yes
+      become: true
       become_user: postgres
 
     - name: Enable TCP/IP connections
@@ -55,7 +64,7 @@
         regexp: '^#listen_addresses'
         line: "listen_addresses = '*'"
         state: present
-      become: yes
+      become: true
       become_user: postgres
       notify:
         - restart postgresql
@@ -67,7 +76,7 @@
         line: "host all all 0.0.0.0/0 trust"
       notify:
         - restart postgresql
-
+  
   handlers:
     - name: restart postgresql
       service: name=postgresql state=restarted
